@@ -151,6 +151,9 @@ void Widget::set_cage(const Cage& c){
 void Widget::reparent(Widget *w){
     parent = w;
 }
+Widget* child(int i){
+    return nullptr;
+}
 
 string Widget::to_string(){
     return "W:" + to_string_xywh(box);

@@ -1,11 +1,12 @@
 
 #pragma once
 
-#include "widget.h"
+#include "container.h"
 
 #include <string>
 
-class Button : Container
+class Button : public Container
 {
     Widget* in;
+    Widget* child(int i);
 };

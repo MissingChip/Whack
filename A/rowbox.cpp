@@ -42,9 +42,11 @@ void RowBox::grow_from(AnchorLoc side)
 
 void RowBox::grow_down()
 {
-    double space = box.h - spacing.top*children.size() - spacing.bottom*children.size();
+    double space = box.h - (spacing.top+spacing.bottom)*children.size();
     double flex = 0;
     double at = box.h - margins.top;
+    Pos force;
+    force.h = (spacing.top+spacing.bottom)*children.size();
 
     for(int i=0;i<children.size();i++){
         space -= children[i]->full_min_h();
@@ -54,18 +56,22 @@ void RowBox::grow_down()
     space = max(space, 0.0);
     for(int i=0;i<children.size();i++){
         Widget* child = children[i];
+        force.w = max(force.w, child->full_min_w());
         child->set_h(child->full_min_h() + child->flex.y/flex*space);
         at -= (spacing.top + child->padding.top + child->full_min_h());
         child->set_y(at);
         at -= (spacing.bottom+child->padding.bottom);
         stick_widget(child);
     }
+    child_size = force;
 }
 void RowBox::grow_up()
 {
-    double space = box.h - spacing.top*children.size() - spacing.bottom*children.size();
+    double space = box.h - (spacing.top+spacing.bottom)*children.size();
     double flex = 0;
     double at = 0;
+    Pos force;
+    force.h = (spacing.top+spacing.bottom)*children.size();
 
     for(int i=0;i<children.size();i++){
         space -= children[i]->full_min_h();
@@ -75,18 +81,22 @@ void RowBox::grow_up()
     space = max(space, 0.0);
     for(int i=0;i<children.size();i++){
         Widget* child = children[i];
+        force.w = max(force.w, child->full_min_w());
         child->set_h(child->full_min_h() + child->flex.y/flex*space);
         at += spacing.bottom + child->padding.bottom;
         child->set_y(at);
         at += (child->full_min_h()+spacing.top+child->padding.top);
         stick_widget(child);
     }
+    child_size = force;
 }
 void RowBox::grow_right()
 {
-    double space = box.w - spacing.left*children.size() - spacing.right*children.size();
+    double space = box.w - (spacing.left+spacing.right)*children.size();
     double flex = 0;
     double at = 0;
+    Pos force;
+    force.w = (spacing.left+spacing.right)*children.size();
 
     for(int i=0;i<children.size();i++){
         space -= children[i]->full_min_w();
@@ -96,18 +106,22 @@ void RowBox::grow_right()
     space = max(space, 0.0);
     for(int i=0;i<children.size();i++){
         Widget* child = children[i];
+        force.h = max(force.h, child->full_min_h());
         child->set_w(child->full_min_w() + child->flex.x/flex*space);
         at += spacing.left + child->padding.left;
         child->set_x(at);
         at += (child->box.w+spacing.right+child->padding.right);
         stick_widget(child);
     }
+    child_size = force;
 }
 void RowBox::grow_left()
 {
-    double space = box.w - spacing.left*children.size() - spacing.right*children.size();
+    double space = box.w - (spacing.left+spacing.right)*children.size();
     double flex = 0;
     double at = box.w - margins.x;
+    Pos force;
+    force.w = (spacing.left+spacing.right)*children.size();
 
     for(int i=0;i<children.size();i++){
         space -= children[i]->full_min_w();
@@ -119,12 +133,14 @@ void RowBox::grow_left()
     space = max(space, 0.0);
     for(int i=0;i<children.size();i++){
         Widget* child = children[i];
+        force.h = max(force.h, child->full_min_h());
         child->set_w(child->full_min_w() + child->flex.x/flex*space);
         at += spacing.left + child->padding.left + child->box.w;
         child->set_x(at);
         at += (spacing.right+child->padding.right);
         stick_widget(child);
     }
+    child_size = force;
 }
 
 void RowBox::stick_widget(Widget* w)

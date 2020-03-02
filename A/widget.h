@@ -61,6 +61,7 @@ public:
     void set_pad_left(double x);
     void set_padding(Rose& pad);
     void set_cage(const Cage& c);
+    Widget* child(int i);
 
     std::string to_string();
 
