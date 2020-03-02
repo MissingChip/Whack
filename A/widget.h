@@ -8,6 +8,10 @@
 #include <string>
 #include <vector>
 
+enum WType{
+
+};
+
 class Widget
 {
     struct Cage{
@@ -17,7 +21,12 @@ class Widget
 public:
     Widget();
     
-    void update(){};
+    virtual void update(){};
+    virtual std::string to_string();
+    virtual std::string inner_info();
+    virtual Widget* child(int i);
+    virtual void draw();
+
     double get_x();
     double get_y();
     double get_w();
@@ -62,9 +71,6 @@ public:
     void set_pad_left(double x);
     void set_padding(Rose& pad);
     void set_cage(const Cage& c);
-    Widget* child(int i);
-
-    std::string to_string();
 
     Rose padding;
 //protected:
@@ -72,6 +78,7 @@ public:
     Widget* parent;
 
     uint id;
+    uint type;
 
     AnchorLoc stick = ALL;
     Rose box;

@@ -9,6 +9,19 @@ Widget::Widget(){
     cage = {{0, 0}, {numeric_limits<double>::infinity(), numeric_limits<double>::infinity()}};
 }
 
+string Widget::to_string(){
+    return "W:" + to_string_xywh(box);
+}
+string Widget::inner_info(){
+    return "";
+}
+Widget* Widget::child(int i){
+    return nullptr;
+}
+void Widget::draw(){
+    printf("%s\n", to_string().c_str());
+}
+
 double Widget::get_x(){
     return box.x;
 }
@@ -157,13 +170,6 @@ void Widget::set_cage(const Cage& c){
 
 void Widget::reparent(Widget *w){
     parent = w;
-}
-Widget* child(int i){
-    return nullptr;
-}
-
-string Widget::to_string(){
-    return "W:" + to_string_xywh(box);
 }
 
 uint Widget::snatch_id()

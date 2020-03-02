@@ -1,5 +1,6 @@
 
 test.out:
-	g++ -o test.out test.cpp $(wildcard A/*.cpp)
+	make -C ./A
+	g++ -o test.out test.cpp -L. -lwhack
 
 .PHONY: test.out
