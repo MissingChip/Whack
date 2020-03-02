@@ -22,6 +22,7 @@ public:
     double get_y();
     double get_w();
     double get_h();
+    Pos global_pos();
     Rose global_box();
 
     double get_min_w();

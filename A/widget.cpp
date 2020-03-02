@@ -24,9 +24,16 @@ double Widget::get_h(){
 const Rose& Widget::get_box(){
     return box;
 }
+Pos Widget::global_pos(){
+    if(parent){
+        Pos o = parent->global_pos();
+        return Pos{o.x+box.x, o.y+box.y};
+    }
+    return Pos{box.x, box.y};
+}
 Rose Widget::global_box(){
     if(parent){
-        Rose o = parent->global_box();
+        Pos o = parent->global_pos();
         return Rose{o.x+box.x, o.y+box.y, box.w, box.h};
     }
     return box;
