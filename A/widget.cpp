@@ -18,7 +18,7 @@ string Widget::inner_info(){
 Widget* Widget::child(int i){
     return nullptr;
 }
-void Widget::draw(){
+void Widget::draw(void* data){
     printf("%s\n", to_string().c_str());
 }
 

@@ -25,7 +25,7 @@ public:
     virtual std::string to_string();
     virtual std::string inner_info();
     virtual Widget* child(int i);
-    virtual void draw();
+    virtual void draw(void* data);
 
     double get_x();
     double get_y();
