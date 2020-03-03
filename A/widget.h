@@ -76,7 +76,7 @@ public:
     Rose padding;
 //protected:
     void reparent(Widget* parent);
-    Widget* parent;
+    Widget* parent = nullptr;
 
     uint id;
     uint type;
