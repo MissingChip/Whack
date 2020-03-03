@@ -2,7 +2,6 @@
 OBJS = $(patsubst %.cpp, %.o, $(wildcard *.cpp))
 
 all: ../libwhack.a
-	@echo $(OBJS)
 .PHONY: all
 
 ../libwhack.a: $(OBJS)
@@ -10,3 +9,5 @@ all: ../libwhack.a
 
 %.o: %.cpp %.h Makefile
 	g++ -c -o $@ $<
+
+widget.o: widget.cpp widget.hpp widget.h

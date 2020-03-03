@@ -1,5 +1,6 @@
 
 #pragma once
+//#define WIDGET_INLINE
 
 #include "position.h"
 
@@ -25,7 +26,7 @@ public:
     virtual std::string to_string();
     virtual std::string inner_info();
     virtual Widget* child(int i);
-    virtual void draw(void* data);
+    virtual void draw(void* data = nullptr);
 
     double get_x();
     double get_y();
@@ -101,3 +102,5 @@ public:
 };
 
 std::string to_string_xywh(Rose);
+
+#include "widget.hpp"

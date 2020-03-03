@@ -22,6 +22,7 @@ void Widget::draw(void* data){
     printf("%s\n", to_string().c_str());
 }
 
+#ifndef WIDGET_INLINE
 double Widget::get_x(){
     return box.x;
 }
@@ -171,6 +172,7 @@ void Widget::set_cage(const Cage& c){
 void Widget::reparent(Widget *w){
     parent = w;
 }
+#endif
 
 uint Widget::snatch_id()
 {
