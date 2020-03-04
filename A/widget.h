@@ -27,6 +27,11 @@ public:
     virtual std::string inner_info();
     virtual Widget* child(int i);
     virtual void draw(void* data = nullptr);
+    void* data = nullptr;
+    template<class T>
+    T* get_data(){
+        return (T*)data;
+    }
 
     double get_x();
     double get_y();
