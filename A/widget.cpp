@@ -216,10 +216,10 @@ uint Widget::snatch_id()
 
 Widget::ID Widget::id_track;
 
-
+/*
 std::string to_string_xywh(Rose r)
 {
     char a[256];
     sprintf(a, "[x: %.2f, y: %.2f, w: %.2f, h: %.2f]", r.x, r.y, r.w, r.h);
     return string(a);
-}
+}*/

@@ -8,7 +8,7 @@
 class RowBox : public Box
 {
 public:
-    //virtual void add(Widget* w);
+    //virtual void add(Tile* w);
     virtual void update();
     void set_margins(const Rose& margins);
     void set_spacing(const Pos& space);
@@ -24,5 +24,5 @@ private:
     void grow_right();
     void grow_left();
     AnchorLoc default_stick();
-    void stick_widget(Widget* widget);
+    void stick_Tile(Tile* Tile);
 };

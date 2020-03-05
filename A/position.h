@@ -35,6 +35,7 @@ struct Pos
     union{ double x, w, left, top; };
     union{ double y, h, l, right, bottom; };
 };
+struct Vec2 : public Pos{};
 
 struct Rose
 {
@@ -51,6 +52,7 @@ struct Rose
     union{ double right, w, x2, W; };
     union{ double bottom, h, y2, S, z; };
 };
+struct Vec4 : public Rose{};
 
 inline bool is_side(AnchorLoc a){
     return (a == TOP || a == LEFT || a == RIGHT || a == BOTTOM);

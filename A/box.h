@@ -9,10 +9,9 @@ class Box : public Container
 {
 public:
     virtual void update() = 0;
-    virtual void add(Widget* w);
-    virtual Widget* child(int i);
-    virtual std::string to_string();
+    virtual void add(Tile* w);
+    virtual Tile* child(int i);
     
 protected:
-    std::vector<Widget*> children;
+    std::vector<Tile*> children;
 };

@@ -5,7 +5,7 @@
 
 void FixBox::update(){
     for(int i=0; i<children.size();i++){
-        Widget* child = children[i];
+        Tile* child = children[i];
         Pos offset;
         uint t = anchors[i].type;
         if(t == none){
@@ -27,15 +27,15 @@ void FixBox::update(){
     }
 }
 
-void FixBox::set_anchor(Widget& w, const Anchor& a){
+void FixBox::set_anchor(Tile& w, const Anchor& a){
     for(int i=0; i<children.size();i++){
         if(w.id == children[i]->id){
             anchors[i] = a;
             return;
         }
     }
-    fprintf(stderr, "Widget %u not found\n", w.id);
+    fprintf(stderr, "Tile %u not found\n", w.id);
 }
-void FixBox::set_anchor(Widget* w, const Anchor* a){
+void FixBox::set_anchor(Tile* w, const Anchor* a){
     set_anchor(*w, *a);
 }

@@ -55,13 +55,13 @@ void RowBox::grow_down()
     if(flex == 0) flex = 1.0;
     space = max(space, 0.0);
     for(int i=0;i<children.size();i++){
-        Widget* child = children[i];
+        Tile* child = children[i];
         force.w = max(force.w, child->full_min_w());
         child->set_h(child->full_min_h() + child->flex.y/flex*space);
         at -= (spacing.top + child->padding.top + child->full_min_h());
         child->set_y(at);
         at -= (spacing.bottom+child->padding.bottom);
-        stick_widget(child);
+        stick_Tile(child);
     }
     child_size = force;
 }
@@ -80,13 +80,13 @@ void RowBox::grow_up()
     if(flex == 0) flex = 1.0;
     space = max(space, 0.0);
     for(int i=0;i<children.size();i++){
-        Widget* child = children[i];
+        Tile* child = children[i];
         force.w = max(force.w, child->full_min_w());
         child->set_h(child->full_min_h() + child->flex.y/flex*space);
         at += spacing.bottom + child->padding.bottom;
         child->set_y(at);
         at += (child->full_min_h()+spacing.top+child->padding.top);
-        stick_widget(child);
+        stick_Tile(child);
     }
     child_size = force;
 }
@@ -105,13 +105,13 @@ void RowBox::grow_right()
     if(flex == 0) flex = 1.0;
     space = max(space, 0.0);
     for(int i=0;i<children.size();i++){
-        Widget* child = children[i];
+        Tile* child = children[i];
         force.h = max(force.h, child->full_min_h());
         child->set_w(child->full_min_w() + child->flex.x/flex*space);
         at += spacing.left + child->padding.left;
         child->set_x(at);
         at += (child->box.w+spacing.right+child->padding.right);
-        stick_widget(child);
+        stick_Tile(child);
     }
     child_size = force;
 }
@@ -132,18 +132,18 @@ void RowBox::grow_left()
     }
     space = max(space, 0.0);
     for(int i=0;i<children.size();i++){
-        Widget* child = children[i];
+        Tile* child = children[i];
         force.h = max(force.h, child->full_min_h());
         child->set_w(child->full_min_w() + child->flex.x/flex*space);
         at += spacing.left + child->padding.left + child->box.w;
         child->set_x(at);
         at += (spacing.right+child->padding.right);
-        stick_widget(child);
+        stick_Tile(child);
     }
     child_size = force;
 }
 
-void RowBox::stick_widget(Widget* w)
+void RowBox::stick_Tile(Tile* w)
 {
     uint s = w->stick;
     if(s == none){
