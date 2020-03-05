@@ -15,9 +15,12 @@ class Tile
 public:
     Rose box;
     Tile();
+    ~Tile();
     
     virtual void update(){};
     virtual Tile* child(int i);
+    uint get_id();
+    static Tile* by_id(uint id);
 
     virtual void click(double x, double y);
     virtual void hover(double x, double y);
@@ -92,15 +95,16 @@ public:
     bool clicked = false;
     Pos mouse = Pos{0,0};
 
-//private:
+private:
     uint snatch_id();
+    template<class T>
     struct ID
     {
         uint id = 0;
+        vector<T*> tiles;
         std::mutex mtx;
     };
-    static ID id_track;
-
+    static ID<Tile> id_track;
 };
 
 std::string to_string_xywh(Rose);
