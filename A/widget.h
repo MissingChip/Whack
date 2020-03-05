@@ -30,6 +30,8 @@ public:
     virtual void click(double x, double y);
     virtual void hover(double x, double y);
     virtual void release(double x, double y);
+    static double get_time();
+    double past_time = 0;
     double delta_time();
 
     void (*on_click)(double x, double y, Widget* wk);
@@ -37,14 +39,6 @@ public:
     void (*on_hover)(double x, double y, Widget* wk);
     void (*on_resize)(double w, double h, Widget* wk);
     static Pos (*get_mouse_pos)(Widget* wk);
-    static double get_time();
-    double past_time = 0;
-
-    void* data = nullptr;
-    template<class T>
-    T* get_data(){
-        return (T*)data;
-    }
 
     double get_x();
     double get_y();
