@@ -60,6 +60,7 @@ void RowBox::grow_down()
     space = max(space, 0.0);
     for(int i=0;i<children.size();i++){
         Tile* child = children[i];
+        printf("%d\n", i);
         force.w = max(force.w, child->full_min_w());
         child->set_h(child->full_min_h() + child->flex.y/flex*space);
         at -= (spacing.top + child->padding.top + child->full_min_h());
