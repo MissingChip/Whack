@@ -26,7 +26,20 @@ public:
     virtual std::string to_string();
     virtual std::string inner_info();
     virtual Widget* child(int i);
-    virtual void draw(void* data = nullptr);
+    virtual void wk_render(void* data = nullptr);
+    virtual void click(double x, double y);
+    virtual void hover(double x, double y);
+    virtual void release(double x, double y);
+    double delta_time();
+
+    void (*on_click)(double x, double y, Widget* wk);
+    void (*on_release)(double x, double y, Widget* wk);
+    void (*on_hover)(double x, double y, Widget* wk);
+    void (*on_resize)(double w, double h, Widget* wk);
+    static Pos (*get_mouse_pos)(Widget* wk);
+    static double get_time();
+    double past_time = 0;
+
     void* data = nullptr;
     template<class T>
     T* get_data(){
@@ -39,6 +52,7 @@ public:
     double get_h();
     Pos global_pos();
     Rose global_box();
+    bool get_clicked();
 
     double get_min_w();
     double get_min_h();
@@ -91,9 +105,8 @@ public:
     Cage cage;
     Pos flex;
     Pos child_size;
-
-    void (*on_click)();
-    void (*on_resize)(double w, double h);
+    bool clicked = false;
+    Pos mouse;
 
 //private:
     uint snatch_id();

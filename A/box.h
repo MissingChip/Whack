@@ -12,7 +12,7 @@ public:
     virtual void add(Widget* w);
     virtual Widget* child(int i);
     virtual std::string to_string();
-    //virtual void draw();
+    
 protected:
     std::vector<Widget*> children;
 };

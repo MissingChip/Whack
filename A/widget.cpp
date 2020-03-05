@@ -1,6 +1,7 @@
 
 #include "wmath.h"
 #include "widget.h"
+#include <time.h>
 
 using namespace std;
 
@@ -18,8 +19,34 @@ string Widget::inner_info(){
 Widget* Widget::child(int i){
     return nullptr;
 }
-void Widget::draw(void* data){
+void Widget::wk_render(void* data){
     printf("%s\n", to_string().c_str());
+}
+void Widget::click(double x, double y){
+    clicked = true;
+    if(on_click){
+        on_click(x, y, this);
+    }
+}
+void Widget::hover(double x, double y){
+    if(on_hover){
+        on_hover(x, y, this);
+    }
+}
+void Widget::release(double x, double y){
+    clicked = false;
+    if(on_release){
+        on_release(x, y, this);
+    }
+}
+double Widget::delta_time(){
+    double tn = get_time();
+    double t = tn-past_time;
+    past_time = tn;
+    return t;
+}
+double Widget::get_time(){
+    return (double)clock()/CLOCKS_PER_SEC;
 }
 
 #ifndef WIDGET_INLINE
@@ -37,6 +64,9 @@ double Widget::get_h(){
 }
 const Rose& Widget::get_box(){
     return box;
+}
+bool Widget::get_clicked(){
+    return clicked;
 }
 Pos Widget::global_pos(){
     if(parent){
@@ -117,12 +147,12 @@ void Widget::set_pos(double x, double y){
     set_y(y);
 }
 void Widget::set_size(const Pos& b){
-    set_w(b.w);
-    set_h(b.h);
+    set_size(b.w, b.h);
 }
 void Widget::set_size(double w, double h){
-    set_w(w);
-    set_h(h);
+    if(w>=0){ set_w(w); }else{w=get_w();};
+    if(h>=0){ set_h(h); }else{h=get_h();};
+    on_resize(w, h, this);
 }
 void Widget::resize(double w, double h){
     set_size(w, h);

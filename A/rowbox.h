@@ -9,7 +9,7 @@ class RowBox : public Box
 {
 public:
     //virtual void add(Widget* w);
-    void update();
+    virtual void update();
     void set_margins(const Rose& margins);
     void set_spacing(const Pos& space);
     void grow_from(AnchorLoc side);
