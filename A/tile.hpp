@@ -13,18 +13,18 @@ inline Tile* Tile::child(int i){
 inline void Tile::click(double x, double y){
     clicked = true;
     if(on_click){
-        on_click(x, y, this);
+        on_click(x, y, id);
     }
 }
 inline void Tile::hover(double x, double y){
     if(on_hover){
-        on_hover(x, y, this);
+        on_hover(x, y, id);
     }
 }
 inline void Tile::release(double x, double y){
     clicked = false;
     if(on_release){
-        on_release(x, y, this);
+        on_release(x, y, id);
     }
 }
 inline double Tile::delta_time(){
@@ -126,7 +126,7 @@ inline void Tile::set_size(double w, double h){
     if(w>=0){ set_w(w); };
     if(h>=0){ set_h(h); };
     if(on_resize){
-        on_resize(w, h, this);
+        on_resize(w, h, id);
     }
 }
 inline void Tile::resize(double w, double h){
@@ -136,15 +136,15 @@ inline void Tile::set_min_size(const Pos& b){
     set_min_size(b.w, b.h);
 }
 inline void Tile::set_min_size(double w, double h){
-    set_min_w(w);
-    set_min_h(h);
+    if(w>=0){set_min_w(w);}
+    if(h>=0){set_min_h(h);}
 }
 inline void Tile::set_max_size(const Pos& b){
     set_max_size(b.w, b.h);
 }
 inline void Tile::set_max_size(double w, double h){
-    set_max_w(w);
-    set_max_h(h);
+    if(w>=0){set_max_w(w);}
+    if(h>=0){set_max_h(h);}
 }
 inline const Rose& Tile::set_box(const Rose& b){
     set_x(b.x);

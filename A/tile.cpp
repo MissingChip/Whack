@@ -8,6 +8,7 @@ Tile::Tile(){
 }
 Tile::~Tile(){
     id_track.mtx.lock();
+    id_track.deleted++;
     id_track.tiles[id] = nullptr;
     id_track.mtx.unlock();
 }
@@ -37,6 +38,9 @@ uint Tile::snatch_id()
 {
     id_track.mtx.lock();
     id = id_track.id++;
+    if(id_track.id != id_track.tiles.size()){
+        fprintf(stderr, "id number does not match tile array size -- something has gone wrong\n\tadding anyways\n");
+    }
     id_track.tiles.push_back(this);
     id_track.mtx.unlock();
     return id;

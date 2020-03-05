@@ -29,10 +29,10 @@ public:
     double past_time = 0;
     double delta_time();
 
-    void (*on_click)(double x, double y, Tile* wk) = nullptr;
-    void (*on_release)(double x, double y, Tile* wk) = nullptr;
-    void (*on_hover)(double x, double y, Tile* wk) = nullptr;
-    void (*on_resize)(double w, double h, Tile* wk) = nullptr;
+    void (*on_click)(double x, double y, uint id) = nullptr;
+    void (*on_release)(double x, double y, uint id) = nullptr;
+    void (*on_hover)(double x, double y, uint id) = nullptr;
+    void (*on_resize)(double w, double h, uint id) = nullptr;
     static Pos (*get_mouse_pos)(Tile* wk);
 
     double get_x();
@@ -101,6 +101,7 @@ private:
     struct ID
     {
         uint id = 0;
+        uint deleted = 0;
         std::vector<T*> tiles;
         std::mutex mtx;
     };
