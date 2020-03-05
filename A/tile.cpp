@@ -6,6 +6,17 @@ Tile::Tile(){
     cage = {{0, 0}, {numeric_limits<double>::infinity(), numeric_limits<double>::infinity()}};
     delta_time();
 }
+Tile::~Tile(){
+    id_track.mtx.lock();
+    id_track.tiles[id] = nullptr;
+    id_track.mtx.unlock();
+}
+Tile* Tile::by_id(uint id){
+    id_track.mtx.lock();
+    Tile* t = id_track.tiles[id];
+    id_track.mtx.unlock();
+    return t;
+}
 
 Pos Tile::global_pos(){
     if(parent){
@@ -26,12 +37,12 @@ uint Tile::snatch_id()
 {
     id_track.mtx.lock();
     id = id_track.id++;
+    id_track.tiles.push_back(this);
     id_track.mtx.unlock();
     return id;
 }
 
-Tile::ID Tile::id_track;
-
+Tile::ID<Tile> Tile::id_track;
 
 std::string to_string_xywh(Rose r)
 {

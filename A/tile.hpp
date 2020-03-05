@@ -4,6 +4,9 @@
 
 using namespace std;
 
+inline uint Tile::get_id(){
+    return id;
+}
 inline Tile* Tile::child(int i){
     return nullptr;
 }
