@@ -13,10 +13,6 @@
 class Tile
 {
 public:
-    struct Cage{
-        Pos min;
-        Pos max;
-    };
     Rose box;
     Tile();
     
@@ -88,14 +84,13 @@ public:
     Tile* parent = nullptr;
 
     uint id;
-    uint type;
 
     AnchorLoc stick = ALL;
     Cage cage;
-    Pos flex;
-    Pos child_size;
+    Pos flex = Pos{0,0};
+    Pos child_size = Pos{0,0};
     bool clicked = false;
-    Pos mouse;
+    Pos mouse = Pos{0,0};
 
 //private:
     uint snatch_id();

@@ -4,6 +4,7 @@
 Tile::Tile(){
     snatch_id();
     cage = {{0, 0}, {numeric_limits<double>::infinity(), numeric_limits<double>::infinity()}};
+    delta_time();
 }
 
 Pos Tile::global_pos(){
