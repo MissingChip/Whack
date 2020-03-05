@@ -78,7 +78,7 @@ public:
     void set_padding(Rose& pad);
     void set_cage(const Cage& c);
 
-    Rose padding;
+    Rose padding = Rose{0,0,0,0};
 //protected:
     void reparent(Tile* parent);
     Tile* parent = nullptr;

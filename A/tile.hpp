@@ -120,8 +120,8 @@ inline void Tile::set_size(const Pos& b){
     set_size(b.w, b.h);
 }
 inline void Tile::set_size(double w, double h){
-    if(w>=0){ set_w(w); }else{w=get_w();};
-    if(h>=0){ set_h(h); }else{h=get_h();};
+    if(w>=0){ set_w(w); };
+    if(h>=0){ set_h(h); };
     if(on_resize){
         on_resize(w, h, this);
     }

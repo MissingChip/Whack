@@ -1,5 +1,7 @@
 #pragma once
 
+#include <limits>
+
 enum AnchorLoc
 {
     none = 0,
@@ -55,8 +57,8 @@ struct Rose
 struct Vec4 : public Rose{};
 
 struct Cage{
-    Pos min;
-    Pos max;
+    Pos min = {0.0, 0.0};
+    Pos max = {std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity()};
 };
 
 inline bool is_side(AnchorLoc a){
