@@ -35,6 +35,10 @@ void RowBox::attach_to(AnchorLoc side)
         this->attach = TOP;
     }
 }
+AnchorLoc RowBox::get_attach()
+{
+    return attach;
+}
 void RowBox::grow_from(AnchorLoc side)
 {
     attach_to(side);

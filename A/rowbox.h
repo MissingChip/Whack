@@ -14,8 +14,9 @@ public:
     void set_spacing(const Pos& space);
     void grow_from(AnchorLoc side);
     void attach_to(AnchorLoc side);
+    AnchorLoc get_attach();
 protected:
-    AnchorLoc attach;
+    AnchorLoc attach = TOP;
     Rose margins;
     Pos spacing;
 private:
