@@ -54,6 +54,11 @@ struct Rose
 };
 struct Vec4 : public Rose{};
 
+struct Cage{
+    Pos min;
+    Pos max;
+};
+
 inline bool is_side(AnchorLoc a){
     return (a == TOP || a == LEFT || a == RIGHT || a == BOTTOM);
 }

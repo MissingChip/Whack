@@ -10,4 +10,6 @@ all: ../libwhack.a
 %.o: %.cpp %.h Makefile
 	g++ -c -o $@ $<
 
-widget.o: widget.cpp widget.hpp widget.h
+tile.o: tile.cpp tile.hpp tile.h
+	g++ -c -o $@ $<
+.PHONY:
