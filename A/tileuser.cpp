@@ -2,7 +2,6 @@
 #include "tileuser.h"
 
 TileUser::TileUser(){
-    add_user(this);
 }
 TileUser::~TileUser(){
     if(tile){
@@ -17,8 +16,9 @@ Tile* TileUser::get_tile(){
 }
 void TileUser::tile_init(){
     tile = get_tile();
-    id = tile->id;
-    add_user(this);
+    if(tile){
+        id = tile->id;
+    }
 }
 void TileUser::click(double x, double y){
     tile->click(x, y);
@@ -38,13 +38,4 @@ Pos TileUser::global_pos(){
 }
 Rose TileUser::global_box(){
     return tile->global_box();
-}
-
-void TileUser::add_user(TileUser* t){
-    users_mutex.lock();
-    if(t->id > tile_users.size()){
-        tile_users.resize(t->id);
-    }
-    tile_users[t->id] = t;
-    users_mutex.unlock();
 }

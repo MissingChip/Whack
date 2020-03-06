@@ -61,9 +61,6 @@ public:
     void set_cage(const Cage& c);
 
 private:
-    static vector<TileUser*> tile_users;
-    static std::mutex users_mutex;
-    static void add_user(TileUser* t);
 };
 
 #include "tileuser.hpp"
