@@ -12,7 +12,7 @@ public:
     uint id;
     uint get_id();
     void tile_init();
-    virtual Tile* get_tile();
+    virtual Tile* get_tile() = 0;
     virtual void update();
 
     virtual void click(double x, double y);
@@ -49,9 +49,9 @@ public:
     void set_size(const Pos& s);
     void set_size(double w, double h);
     void set_min_size(const Pos& s);
-    void set_min_size(double w, double h);
+    void set_min_size(double w, double h = -1);
     void set_max_size(const Pos& s);
-    void set_max_size(double w, double h);
+    void set_max_size(double w, double h = -1);
     void set_box(const Rose& b);
     void set_pad_top(double x);
     void set_pad_right(double x);

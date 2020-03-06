@@ -11,9 +11,6 @@ TileUser::~TileUser(){
         fprintf(stderr, "tile for TileUser %u was never assigned - you live dangerously\n", get_id());
     }
 }
-Tile* TileUser::get_tile(){
-    return tile;
-}
 void TileUser::tile_init(){
     tile = get_tile();
     if(tile){

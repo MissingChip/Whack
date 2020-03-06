@@ -52,6 +52,9 @@ inline double Tile::get_h(){
 inline const Rose& Tile::get_box(){
     return box;
 }
+inline AnchorLoc Tile::get_stick(){
+    return stick;
+}
 inline bool Tile::is_clicked(){
     return clicked;
 }
@@ -172,6 +175,9 @@ inline void Tile::set_padding(Rose& pad){
 }
 inline void Tile::set_cage(const Cage& c){
     cage = c;
+}
+inline void Tile::set_stick(AnchorLoc on){
+    stick = on;
 }
 
 inline void Tile::reparent(Tile *w){

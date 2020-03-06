@@ -41,6 +41,7 @@ public:
     double get_h();
     Pos global_pos();
     Rose global_box();
+    AnchorLoc get_stick();
     bool is_clicked();
 
     double get_min_w();
@@ -80,6 +81,7 @@ public:
     void set_pad_left(double x);
     void set_padding(Rose& pad);
     void set_cage(const Cage& c);
+    void set_stick(AnchorLoc on);
 
     Rose padding = Rose{0,0,0,0};
 //protected:
