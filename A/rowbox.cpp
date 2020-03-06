@@ -167,20 +167,20 @@ void RowBox::stick_tile(Tile* w)
         s = default_stick();
     }
     if(attach == TOP || attach == BOTTOM){
-        if(w->stick | LEFT){
+        if(w->stick & LEFT){
             w->set_x(margins.left + w->padding.left);
             w->set_w(w->get_min_w());
         }
-        if(w->stick | RIGHT){
+        if(w->stick & RIGHT){
             w->set_w(box.w - w->box.x - w->padding.right - margins.right);
         }
     }
     if(attach == RIGHT || attach == LEFT){
-        if(w->stick | BOTTOM){
+        if(w->stick & BOTTOM){
             w->set_y(margins.bottom + w->padding.bottom);
             w->set_h(w->get_min_h());
         }
-        if(w->stick | TOP){
+        if(w->stick & TOP){
             w->set_h(box.h - w->box.y - w->padding.top - margins.top);
         }
     }
