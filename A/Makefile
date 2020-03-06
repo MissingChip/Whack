@@ -12,4 +12,6 @@ all: ../libwhack.a
 
 tile.o: tile.cpp tile.hpp tile.h
 	g++ -c -o $@ $<
+tileuser.o: tileuser.cpp tileuser.hpp tileuser.h
+	g++ -c -o $@ $<
 .PHONY:

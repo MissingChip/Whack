@@ -24,7 +24,20 @@ void RowBox::set_margins(const Rose& margins)
 }
 void RowBox::set_spacing(const Pos& space)
 {
-    this->spacing = space;
+    if(space.x>=0){spacing.x = space.x;}
+    if(space.y>=0){spacing.y = space.y;}
+}
+void RowBox::set_spacing(double first, double last)
+{
+    if(first >= 0){spacing.x = first;}
+    if(last >= 0){spacing.y = last;}
+}
+void RowBox::set_spacing(double amt)
+{
+    if(amt >= 0){
+        spacing.x = amt/2;
+        spacing.y = amt/2;
+    }
 }
 void RowBox::attach_to(AnchorLoc side)
 {
@@ -65,7 +78,7 @@ void RowBox::grow_down()
         at -= (spacing.top + child->padding.top + child->full_min_h());
         child->set_y(at);
         at -= (spacing.bottom+child->padding.bottom);
-        stick_Tile(child);
+        stick_tile(child);
     }
     child_size = force;
 }
@@ -90,7 +103,7 @@ void RowBox::grow_up()
         at += spacing.bottom + child->padding.bottom;
         child->set_y(at);
         at += (child->full_min_h()+spacing.top+child->padding.top);
-        stick_Tile(child);
+        stick_tile(child);
     }
     child_size = force;
 }
@@ -115,7 +128,7 @@ void RowBox::grow_right()
         at += spacing.left + child->padding.left;
         child->set_x(at);
         at += (child->box.w+spacing.right+child->padding.right);
-        stick_Tile(child);
+        stick_tile(child);
     }
     child_size = force;
 }
@@ -142,12 +155,12 @@ void RowBox::grow_left()
         at += spacing.left + child->padding.left + child->box.w;
         child->set_x(at);
         at += (spacing.right+child->padding.right);
-        stick_Tile(child);
+        stick_tile(child);
     }
     child_size = force;
 }
 
-void RowBox::stick_Tile(Tile* w)
+void RowBox::stick_tile(Tile* w)
 {
     uint s = w->stick;
     if(s == none){

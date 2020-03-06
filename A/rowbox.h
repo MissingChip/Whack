@@ -12,6 +12,8 @@ public:
     virtual void update();
     void set_margins(const Rose& margins);
     void set_spacing(const Pos& space);
+    void set_spacing(double first, double last);
+    void set_spacing(double amt);
     void grow_from(AnchorLoc side);
     void attach_to(AnchorLoc side);
     AnchorLoc get_attach();
@@ -25,5 +27,5 @@ private:
     void grow_right();
     void grow_left();
     AnchorLoc default_stick();
-    void stick_Tile(Tile* Tile);
+    void stick_tile(Tile* Tile);
 };
