@@ -3,6 +3,7 @@
 //#define WIDGET_INLINE
 
 #include "position.h"
+#include "tracker.h"
 #include "wmath.h"
 
 #include <limits>
@@ -98,16 +99,7 @@ public:
     Pos mouse = Pos{0,0};
 
 private:
-    uint snatch_id();
-    template<class T>
-    struct ID
-    {
-        uint id = 0;
-        uint deleted = 0;
-        std::vector<T*> tiles;
-        std::mutex mtx;
-    };
-    static ID<Tile> id_track;
+    static Tracker<Tile> tracker;
 };
 
 std::string to_string_xywh(Rose);

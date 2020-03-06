@@ -2,21 +2,15 @@
 #include "tile.h"
 
 Tile::Tile(){
-    snatch_id();
+    id = tracker.add(this);
     cage = {{0, 0}, {numeric_limits<double>::infinity(), numeric_limits<double>::infinity()}};
     delta_time();
 }
 Tile::~Tile(){
-    id_track.mtx.lock();
-    id_track.deleted++;
-    id_track.tiles[id] = nullptr;
-    id_track.mtx.unlock();
+    tracker.remove(id);
 }
 Tile* Tile::by_id(uint id){
-    id_track.mtx.lock();
-    Tile* t = id_track.tiles[id];
-    id_track.mtx.unlock();
-    return t;
+    return tracker[id];
 }
 
 Pos Tile::global_pos(){
@@ -34,19 +28,7 @@ Rose Tile::global_box(){
     return box;
 }
 
-uint Tile::snatch_id()
-{
-    id_track.mtx.lock();
-    id = id_track.id++;
-    if(id_track.id-1 != id_track.tiles.size()){
-        fprintf(stderr, "id number (%u) does not match tile array size (%ld) -- something has gone wrong\n\tadding anyways\n", id_track.id, id_track.tiles.size());
-    }
-    id_track.tiles.push_back(this);
-    id_track.mtx.unlock();
-    return id;
-}
-
-Tile::ID<Tile> Tile::id_track;
+Tracker<Tile> Tile::tracker;
 
 std::string to_string_xywh(Rose r)
 {
