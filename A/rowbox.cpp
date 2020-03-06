@@ -172,6 +172,7 @@ void RowBox::stick_tile(Tile* w)
             w->set_w(w->get_min_w());
         }
         if(w->stick & RIGHT){
+            if(!w->stick & LEFT) w->set_x(box.w-margins.right-w->full_min_w());
             w->set_w(box.w - w->box.x - w->padding.right - margins.right);
         }
     }
@@ -181,6 +182,7 @@ void RowBox::stick_tile(Tile* w)
             w->set_h(w->get_min_h());
         }
         if(w->stick & TOP){
+            if(!w->stick & BOTTOM) w->set_y(box.h-margins.top-w->full_min_h());
             w->set_h(box.h - w->box.y - w->padding.top - margins.top);
         }
     }
