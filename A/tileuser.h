@@ -25,15 +25,15 @@ public:
     double get_y();
     double get_w();
     double get_h();
+    const Rose& get_box();
     Pos global_pos();
     Rose global_box();
+    AnchorLoc get_stick();
 
     double get_min_w();
     double get_min_h();
     double get_max_w();
     double get_max_h();
-
-    const Rose& get_box();
 
     double set_x(double x);
     double set_y(double y);
@@ -59,6 +59,7 @@ public:
     void set_pad_left(double x);
     void set_padding(Rose& pad);
     void set_cage(const Cage& c);
+    void set_stick(AnchorLoc on);
 
 private:
 };

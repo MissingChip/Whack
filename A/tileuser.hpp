@@ -22,6 +22,9 @@ inline double TileUser::get_h(){
 inline const Rose& TileUser::get_box(){
     return tile->get_box();
 }
+inline AnchorLoc TileUser::get_stick(){
+    return tile->stick;
+}
 inline double TileUser::get_min_w(){
     return tile->get_min_w();
 }
@@ -105,11 +108,13 @@ inline void TileUser::set_pad_left(double x){
 inline void TileUser::set_pad_right(double x){
    tile->set_pad_right(x);
 }
-
 inline void TileUser::set_padding(Rose& pad){
     tile->set_padding(pad);
 }
 
 inline void TileUser::set_cage(const Cage& c){
     tile->set_cage(c);
+}
+inline void TileUser::set_stick(AnchorLoc on){
+    tile->set_stick(on);
 }
