@@ -167,22 +167,28 @@ void RowBox::stick_tile(Tile* w)
         s = default_stick();
     }
     if(attach == TOP || attach == BOTTOM){
+        if((w->stick & TOP) || (w->stick & BOTTOM)){
+            w->set_x((box.w-margins.right+margins.left-w->full_min_w())/2);
+        }
         if(w->stick & LEFT){
             w->set_x(margins.left + w->padding.left);
             w->set_w(w->get_min_w());
         }
         if(w->stick & RIGHT){
-            if(!w->stick & LEFT) w->set_x(box.w-margins.right-w->full_min_w());
+            if(!(w->stick & LEFT)) w->set_x(box.w-margins.right-w->full_min_w());
             w->set_w(box.w - w->box.x - w->padding.right - margins.right);
         }
     }
     if(attach == RIGHT || attach == LEFT){
+        if((w->stick & RIGHT) || (w->stick & LEFT)){
+            w->set_y((box.h-margins.top+margins.bottom-w->full_min_h())/2);
+        }
         if(w->stick & BOTTOM){
             w->set_y(margins.bottom + w->padding.bottom);
             w->set_h(w->get_min_h());
         }
         if(w->stick & TOP){
-            if(!w->stick & BOTTOM) w->set_y(box.h-margins.top-w->full_min_h());
+            if(!(w->stick & BOTTOM)) w->set_y(box.h-margins.top-w->full_min_h());
             w->set_h(box.h - w->box.y - w->padding.top - margins.top);
         }
     }
