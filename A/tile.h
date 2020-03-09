@@ -93,7 +93,7 @@ public:
 
     AnchorLoc stick = ALL;
     Cage cage;
-    Pos flex = Pos{0,0};
+    Pos flex = Pos{1,1};
     Pos child_size = Pos{0,0};
     bool clicked = false;
     Pos mouse = Pos{0,0};
