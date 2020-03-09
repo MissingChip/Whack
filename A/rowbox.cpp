@@ -168,7 +168,7 @@ void RowBox::stick_tile(Tile* w)
     }
     if(attach == TOP || attach == BOTTOM){
         if((w->stick & TOP) || (w->stick & BOTTOM)){
-            w->set_x((box.w-margins.right-margins.left-w->full_min_w())/2+margins.left);
+            w->set_x((box.w-margins.right-margins.left-w->full_min_w())/2+margins.left+w->padding.left);
         }
         if(w->stick & LEFT){
             w->set_x(margins.left + w->padding.left);
@@ -181,7 +181,7 @@ void RowBox::stick_tile(Tile* w)
     }
     if(attach == RIGHT || attach == LEFT){
         if((w->stick & RIGHT) || (w->stick & LEFT)){
-            w->set_y((box.h-margins.top-margins.bottom-w->full_min_h())/2+margins.bottom);
+            w->set_y((box.h-margins.top-margins.bottom-w->full_min_h())/2+margins.bottom+w->padding.bottom);
         }
         if(w->stick & BOTTOM){
             w->set_y(margins.bottom + w->padding.bottom);
