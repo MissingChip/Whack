@@ -144,17 +144,15 @@ void RowBox::grow_left()
         space -= children[i]->full_min_w();
         flex += children[i]->flex.x;
     }
-    if(flex = 0){
-        flex = 1;
-    }
+    if(flex == 0) flex = 1.0;
     space = max(space, 0.0);
     for(int i=0;i<children.size();i++){
         Tile* child = children[i];
         force.h = max(force.h, child->full_min_h());
         child->set_w(child->full_min_w() + child->flex.x/flex*space);
-        at += spacing.left + child->padding.left + child->get_w();
+        at -= spacing.left + child->padding.left + child->get_w();
         child->set_x(at);
-        at += (spacing.right+child->padding.right);
+        at -= (spacing.right+child->padding.right);
         stick_tile(child);
     }
     child_size = force;
