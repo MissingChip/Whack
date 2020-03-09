@@ -8,14 +8,14 @@ using namespace std;
 void RowBox::update()
 {
     if(children.size() > 0){
-        if(attach == TOP)
-            grow_down(); return;
-        if(attach == BOTTOM)
-            grow_up(); return;
-        if(attach == RIGHT)
-            grow_left(); return;
-        if(attach == LEFT)
-            grow_right(); return;
+        if(attach == TOP){
+            grow_down(); return;}
+        if(attach == BOTTOM){
+            grow_up(); return;}
+        if(attach == RIGHT){
+            grow_left(); return;}
+        if(attach == LEFT){
+            grow_right(); return;}
     }
 }
 void RowBox::set_margins(const Rose& margins)
@@ -75,7 +75,7 @@ void RowBox::grow_down()
         Tile* child = children[i];
         force.w = max(force.w, child->full_min_w());
         child->set_h(child->full_min_h() + child->flex.y/flex*space);
-        at -= (spacing.top + child->padding.top + child->full_min_h());
+        at -= (spacing.top + child->padding.top + child->get_h());
         child->set_y(at);
         at -= (spacing.bottom+child->padding.bottom);
         stick_tile(child);
@@ -102,7 +102,7 @@ void RowBox::grow_up()
         child->set_h(child->full_min_h() + child->flex.y/flex*space);
         at += spacing.bottom + child->padding.bottom;
         child->set_y(at);
-        at += (child->full_min_h()+spacing.top+child->padding.top);
+        at += (child->get_h()+spacing.top+child->padding.top);
         stick_tile(child);
     }
     child_size = force;
@@ -127,7 +127,7 @@ void RowBox::grow_right()
         child->set_w(child->full_min_w() + child->flex.x/flex*space);
         at += spacing.left + child->padding.left;
         child->set_x(at);
-        at += (child->box.w+spacing.right+child->padding.right);
+        at += (child->get_w()+spacing.right+child->padding.right);
         stick_tile(child);
     }
     child_size = force;
@@ -152,7 +152,7 @@ void RowBox::grow_left()
         Tile* child = children[i];
         force.h = max(force.h, child->full_min_h());
         child->set_w(child->full_min_w() + child->flex.x/flex*space);
-        at += spacing.left + child->padding.left + child->box.w;
+        at += spacing.left + child->padding.left + child->get_w();
         child->set_x(at);
         at += (spacing.right+child->padding.right);
         stick_tile(child);
@@ -181,7 +181,7 @@ void RowBox::stick_tile(Tile* w)
     }
     if(attach == RIGHT || attach == LEFT){
         if((w->stick == RIGHT) || (w->stick == LEFT)){
-            w->set_y((box.h-margins.top-margins.bottom-w->get_h())/2+margins.bottom+w->padding.bottom);
+            w->set_y((box.h-margins.top+margins.bottom-w->get_h())/2+w->padding.bottom);
         }
         if(w->stick & BOTTOM){
             w->set_y(margins.bottom + w->padding.bottom);
