@@ -1,3 +1,8 @@
+#pragma once
+
+
+#ifndef TRACKER_H
+#define TRACKER_H
 
 #include <mutex>
 #include <vector>
@@ -59,3 +64,4 @@ inline T* Tracker<T>::get_safe(uint id){
     if(id>=items.size()) return nullptr;
     return items[id];
 }
+#endif
