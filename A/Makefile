@@ -10,8 +10,8 @@ all: ../libwhack.a
 %.o: %.cpp %.h Makefile
 	g++ -c -o $@ $<
 
-tile.o: tile.cpp tile.hpp tile.h
+tile.o: tile.cpp tile.hpp tile.h tracker.h
 	g++ -c -o $@ $<
-tileuser.o: tileuser.cpp tileuser.hpp tileuser.h
+tileuser.o: tileuser.cpp tileuser.hpp tileuser.h tracker.h
 	g++ -c -o $@ $<
 .PHONY:

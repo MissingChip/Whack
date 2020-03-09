@@ -26,7 +26,7 @@ class Tracker
 template<class T>
 inline uint Tracker<T>::add(T* item){
     mtx.lock();
-    items[id_a] = item;
+    items.push_back(item);
     mtx.unlock();
     return id_a++;
 }

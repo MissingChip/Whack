@@ -2,7 +2,9 @@
 #include "tile.h"
 
 Tile::Tile(){
+    printf("ab\n");
     id = tracker.add(this);
+    printf("ac\n");
     cage = {{0, 0}, {numeric_limits<double>::infinity(), numeric_limits<double>::infinity()}};
     delta_time();
 }
