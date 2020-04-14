@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "tile.h"
-#include "group.h"
+#include "../tile.h"
+#include "../group.h"
 
 class Modifier {
 public:

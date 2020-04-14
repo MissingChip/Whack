@@ -1,6 +1,6 @@
 #pragma once
 #include "vec.h"
-class Box;
+class Group;
 
 class Tile
 {
@@ -16,29 +16,21 @@ public:
     Tile(float x, float y, float w, float h);
     virtual ~Tile();
 
-    virtual void update();
-    virtual void update_all();
+    virtual void update(){};
+    virtual void update_all(){};
     Vec2 global_pos();
 };
 
-Tile::Tile()
+inline Tile::Tile()
 {
 }
-Tile::Tile(float x, float y, float w, float h)
+inline Tile::Tile(float x, float y, float w, float h)
 {
     pos.x = x;
     pos.y = y;
     size.x = w;
     size.y = h;
 }
-
-Tile::~Tile()
+inline Tile::~Tile()
 {
-}
-
-inline Vec2 Tile::global_pos(){
-    if(parent){
-        return pos + parent->global_pos();
-    }
-    return pos;
 }

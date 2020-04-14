@@ -1,13 +1,18 @@
 
 #include <cstdio>
 
-#include "vec.h"
+#include "stretchmod.h"
+
 int main(){
-    int i = 2;
-    int& i2 = i;
-    printf("%d %d\n", i, i2);
-    i2 = 3;
-    printf("%d %d\n", i, i2);
-    float a,b = 2;
-    printf("%f %f\n", a, b);
+    Group g;
+    Tile t;
+    StretchMod m;
+    m.direction = anchors::bottom;
+    g.add(&t);
+    g.add(&m);
+    g.size.x = 100;
+    g.size.y = 100;
+    printf("%2f, %2f\n", t.size.x, t.size.y);
+    g.update();
+    printf("%2f, %2f\n", t.size.x, t.size.y);
 }
