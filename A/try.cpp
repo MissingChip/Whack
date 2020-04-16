@@ -1,7 +1,7 @@
 
 #include <cstdio>
 
-#include "mod/stretchmod.h"
+#include "stretchmod.h"
 
 int main(){
     Group g;

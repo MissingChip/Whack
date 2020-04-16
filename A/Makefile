@@ -1,10 +1,20 @@
 
 
-OBJS = $(patsubst %.cpp, obj/%.o, $(wildcard *.cpp))
-OBJS += $(wildcard mod/bin/*.o)
+IDIR = .
+ODIR = obj
 
-bin/libwhack.a: $(OBJS)
-	ar -rcs bin/libwhack.a $?
+OBJS = $(patsubst %.cpp, $(ODIR)/%.o, $(wildcard *.cpp))
+DEPS = $(wildcard $(IDIR)/*.h)
 
-try:
-	g++ -o try try.cpp group.cpp mod/stretchmod.cpp
+CXX = g++
+CXXFLAGS = -I$(IDIR)
+
+$(ODIR)/libwhack.a: $(OBJS)
+	ar -rcs $(ODIR)/libwhack.a $?
+
+obj/%.o: %.cpp $(DEPS)
+	@mkdir -p $(ODIR)
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
+try: $(OBJS)
+	$(CXX) -o try try.cpp -L$(ODIR) -lwhack $(CFLAGS)

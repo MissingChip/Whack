@@ -1,5 +1,5 @@
 #include "group.h"
-#include "mod/modifier.h"
+#include "modifier.h"
 
 void Group::update() {
     for(Modifier* m : mods){

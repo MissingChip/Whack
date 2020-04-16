@@ -10,6 +10,7 @@ public:
     std::vector<Tile*> in;
     std::vector<Modifier*> mods;
 
+    virtual ~Group(){};
     virtual void update();
     virtual void update_all();
     void add(Tile* t);
