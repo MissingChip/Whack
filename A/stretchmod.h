@@ -4,6 +4,6 @@
 
 class StretchMod : public Modifier{
 public:
-    int direction;
+    int direction = anchors::right;
     virtual void apply(Group*);
 };

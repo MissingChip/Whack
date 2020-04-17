@@ -15,6 +15,3 @@ $(ODIR)/libwhack.a: $(OBJS)
 obj/%.o: %.cpp $(DEPS)
 	@mkdir -p $(ODIR)
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
-
-try: $(ODIR)/libwhack.a
-	$(CXX) -o try try.cpp -L$(ODIR) -lwhack $(CFLAGS)

@@ -19,13 +19,21 @@ void AlignMod::align_tile(Tile* t, Group* g){
     Vec2& size = g->size;
     
     if(a & left){
-        t->pos.x = pos.x;
-    }else if(a & right){
-        t->pos.x = pos.x+size.x-t->size.x;
+        if(a & right) {
+            t->pos.x = (size.x-t->size.x)/2;
+        } else {
+            t->pos.x = 0;
+        }
+    } else if(a & right) {
+        t->pos.x = size.x-t->size.x;
     }
-    if(a & top){
-        t->pos.y = pos.y;
-    }else if(a & bottom){
-        t->pos.y = pos.y+size.y-t->size.y;
+    if(a & top) {
+        if(a & bottom) {
+            t->pos.y = (size.y-t->size.y)/2;
+        } else {
+            t->pos.y = 0;
+        }
+    } else if(a & bottom) {
+        t->pos.y = size.y-t->size.y;
     }
 }
