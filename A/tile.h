@@ -19,6 +19,8 @@ public:
     virtual void update(){};
     virtual void update_all(){};
     Vec2 global_pos();
+    void ssize(Vec2& s);
+    void spos(Vec2& s);
 };
 
 inline Tile::Tile()
@@ -33,4 +35,11 @@ inline Tile::Tile(float x, float y, float w, float h)
 }
 inline Tile::~Tile()
 {
+}
+
+inline void Tile::ssize(Vec2& s){
+    size = s;
+}
+inline void Tile::spos(Vec2& s){
+    pos = s;
 }

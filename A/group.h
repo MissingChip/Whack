@@ -13,13 +13,6 @@ public:
     virtual ~Group(){};
     virtual void update();
     virtual void update_all();
-    void add(Tile* t);
-    void add(Modifier* m);
+    virtual void add(Tile* t);
+    virtual void add(Modifier* m);
 };
-
-inline void Group::add(Tile* t){
-    in.push_back(t);
-}
-inline void Group::add(Modifier* m){
-    mods.push_back(m);
-}

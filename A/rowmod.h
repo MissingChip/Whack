@@ -3,8 +3,9 @@
 #include "modifier.h"
 
 class RowMod : public Modifier{
-    bool direction;
-    float spacing;
+public:
+    bool direction = 1;
+    float spacing = 0;
 
     virtual void apply(Group*);
 private: /* helpers */

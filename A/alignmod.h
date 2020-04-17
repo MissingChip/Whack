@@ -3,6 +3,7 @@
 #include "modifier.h"
 
 class AlignMod : public Modifier{
+public:
     int anchor;
 
     virtual void apply(Group*);

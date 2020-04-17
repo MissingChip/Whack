@@ -16,3 +16,9 @@ void Group::update_all() {
         m->apply(this);
     }
 }
+void Group::add(Tile* t){
+    in.push_back(t);
+}
+void Group::add(Modifier* m){
+    mods.push_back(m);
+}
