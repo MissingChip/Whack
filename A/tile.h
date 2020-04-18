@@ -10,6 +10,7 @@ public:
     Vec2 size;
     Group* parent = nullptr;
     bool in_use;
+    uint id;
     //bool visible;
 
     Tile();
