@@ -38,6 +38,7 @@ int main(){
     if( glewInit() != GLEW_OK ){
         printf("GLEW init error\n");
     }
+
     Tile t = Tile(0, 0, 50, 24);
     Tile t2(t);
     Tile t3(t);
@@ -50,6 +51,7 @@ int main(){
     g.add(&t2);
     g.add(&t3);
     g.add(&t4);
+
     Visualizer v(&g);
 
     printf("%s\n", glfwGetVersionString());
@@ -62,6 +64,7 @@ int main(){
             glViewport(0, 0, width, height);
             v.size.x = width;
             v.size.y = height;
+            
             g.size.x = width;
             g.size.y = height;
             g.update();

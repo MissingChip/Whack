@@ -1,8 +1,15 @@
 #include "visualizer.h"
+#include "whack.h"
 #include <glm/gtc/type_ptr.hpp>
 
 using namespace glm;
 
+Visualizer::Visualizer(){
+    quad.attribute(1, 2, 2);
+    transform = glm::ortho<double>(0, 1, 0, 1, -1, 1);
+    trid = glGetUniformLocation(shader.id, "transform");
+    coid = glGetUniformLocation(shader.id, "color");
+}
 Visualizer::Visualizer(Tile* r){
     root = r;
     quad.attribute(1, 2, 2);

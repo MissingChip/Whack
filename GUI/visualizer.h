@@ -24,6 +24,7 @@ namespace quadinfo{
 
 class Visualizer {
 public:
+    Visualizer();
     Visualizer(Tile* r);
     Tile* root;
     glm::vec2 size = glm::vec2(1.0, 1.0);
