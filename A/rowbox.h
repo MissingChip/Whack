@@ -6,11 +6,14 @@
 
 class RowBox : public Group {
 public:
-    AlignMod* alignmod;
-    RowMod* rowmod;
+    AlignMod alignmod = AlignMod();
+    RowMod rowmod = RowMod();
 
     RowBox();
+    RowBox(Tile* t) : Group(t){init();};
     virtual ~RowBox();
-    void set_direction(bool horizontal);
+    void set_direction(bool vertical);
     void set_align(int anchor);
+private:
+    void init();
 };

@@ -1,26 +1,24 @@
 
 #include "rowbox.h"
 
-RowBox::RowBox(){;
-    add(alignmod = new AlignMod());
-    add(rowmod = new RowMod());
+RowBox::RowBox(){
+    init();
 }
 
 RowBox::~RowBox(){
-    if(alignmod){
-        delete alignmod;
-        alignmod = nullptr;
-    }
-    if(rowmod){
-        delete rowmod;
-        rowmod = nullptr;
-    }
 }
 
-void RowBox::set_direction(bool horizontal){
-    rowmod->direction = horizontal;
+void RowBox::set_direction(bool vertical){
+    rowmod.direction = vertical;
+    if(vertical) alignmod.anchor = anchors::left;
+    else alignmod.anchor = anchors::top;
 }
 
 void RowBox::set_align(int anchor){
-    alignmod->anchor = anchor;
+    alignmod.anchor = anchor;
+}
+
+void RowBox::init(){
+    add(&alignmod);
+    add(&rowmod);
 }

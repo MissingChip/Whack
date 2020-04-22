@@ -1,9 +1,14 @@
 
 #include <stdio.h>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
 #include "gl.h"
 
 #include "vertex_group.h"
 #include "shader.h"
+
+#include "visualizer.h"
+#include "whack.h"
 
 int main(){
     /* Initialize the library */
@@ -20,7 +25,7 @@ int main(){
     //glEnable(GL_MULTISAMPLE);
     
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(640, 480, "Whack", NULL, NULL);
 
     if (!window)
     {
@@ -33,36 +38,46 @@ int main(){
     if( glewInit() != GLEW_OK ){
         printf("GLEW init error\n");
     }
-    float vertices[] = {
-        // positions    // texture coords
-        1.0f, 1.0f,     1.0f, 1.0f,   // top right
-        1.0f, 0.0f,     1.0f, 0.0f,   // bottom right
-        0.0f, 0.0f,     0.0f, 0.0f,   // bottom left
-        0.0f, 1.0f,     0.0f, 1.0f    // top left 
-    };
-    unsigned int indices[] = {
-        0, 1, 3,   // first triangle
-        1, 2, 3    // second triangle
-    };
-    VertexGroup quad(sizeof(vertices), vertices, sizeof(indices), indices, 4);
-    Shader shader = Shader::file("/home/ethanf/A/pro/whack/GUI/gui.vs", "/home/ethanf/A/pro/whack/GUI/gui.fs");
-    
+    Tile t = Tile(0, 0, 50, 24);
+    Tile t2(t);
+    Tile t3(t);
+    Tile t4(t);
+    RowBox g(&t);
+    g.set_direction(0);
+    g.rowmod.resize_on_update = false;
+    g.size.x = 600;
+    g.size.y = 300;
+    g.add(&t2);
+    g.add(&t3);
+    g.add(&t4);
+    Visualizer v(&g);
+
     printf("%s\n", glfwGetVersionString());
+    int width, height, pwidth, pheight;
 
     while( !glfwWindowShouldClose( window ) )
     {
+        glfwGetWindowSize(window, &width, &height);
+        if(pwidth != width || pheight != height){
+            glViewport(0, 0, width, height);
+            v.size.x = width;
+            v.size.y = height;
+            g.size.x = width;
+            g.size.y = height;
+            g.update();
+            pwidth = width;
+            pheight = height;
+        }
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear( GL_COLOR_BUFFER_BIT );
 
-        quad.use();
-        shader.use();
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        v.draw();
 
         glfwSwapBuffers( window );
         glfwPollEvents();
     }
 
     glfwTerminate();
-    //*/
+
     return 0;
 }

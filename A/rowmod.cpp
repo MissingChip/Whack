@@ -14,5 +14,7 @@ void RowMod::apply(Group* g){
         c->pos[o] = g->pos[o] + at;
         at += c->size[o]+spacing;
     }
-    g->size[o] = at-spacing;
+    if(resize_on_update){
+        g->size[o] = at-spacing;
+    }
 }
