@@ -43,20 +43,47 @@ int main(){
     Tile t2(t);
     Tile t3(t);
     Tile t4(t);
+    t.size.x = 40;
+    t2.size.x = 60;
     RowBox g(&t);
-    g.set_direction(0);
-    g.rowmod.resize_on_update = false;
-    g.size.x = 600;
-    g.size.y = 300;
     g.add(&t2);
     g.add(&t3);
     g.add(&t4);
+    BoundMod bm;
+    bm.bind_x = false;
+    g.add(&bm);
+    RowBox g2;
+    RowBox g3(&g);
+    g3.add(&g2);
+    FillMod f;
+    g3.add(&f);
+    f.direction = 1;
+    StretchMod s(anchors::horizontal);
+    g3.add(&s);
+    g.set_direction(0);
+    g2.set_direction(0);
+    g3.set_direction(1);
+    g3.rowmod.resize_on_update = false;
 
-    Visualizer v(&g);
+    StretchMod menustretch(anchors::vertical);
+    Group sidemenu;
+    FillMod winstretch;
+    winstretch.direction = 0;
+    Group win;
+    sidemenu.size.x = 240;
+    sidemenu.size.y = 300;
+    g2.add(&sidemenu);
+    g2.add(&win);
+    g2.add(&menustretch);
+    g2.add(&winstretch);
+
+    Visualizer v(&g3);
 
     printf("%s\n", glfwGetVersionString());
+    printf("%p %p\n", &g2, &sidemenu);
     int width, height, pwidth, pheight;
 
+    g3.update_all();
     while( !glfwWindowShouldClose( window ) )
     {
         glfwGetWindowSize(window, &width, &height);
@@ -65,11 +92,17 @@ int main(){
             v.size.x = width;
             v.size.y = height;
             
-            g.size.x = width;
-            g.size.y = height;
-            g.update();
+            g3.size.x = width;
+            g3.size.y = height;
+            g3.update_all();
+            g3.update_all();
             pwidth = width;
             pheight = height;
+
+            //Vec2 p = g2.global_pos();
+            //printf("%f %f\t%f %f\n", sidemenu.size.x, sidemenu.size.y, p.x, p.y);
+            //printf("b %f %p\n", g2.size.y, &g2);
+            //printf("b %f %p %lu\n", sidemenu.pos.y, sidemenu.parent, g2.mods.size());
         }
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear( GL_COLOR_BUFFER_BIT );

@@ -11,7 +11,7 @@ void RowMod::apply(Group* g){
     float at = 0;
     for(int i=0;i<in.size();i++){
         Tile* c = in[i];
-        c->pos[o] = g->pos[o] + at;
+        c->pos[o] = at;
         at += c->size[o]+spacing;
     }
     if(resize_on_update){

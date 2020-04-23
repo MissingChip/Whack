@@ -2,14 +2,14 @@
 LIBNAME = visual
 TESTNAME = visual
 
-IDIR = . ../include ../A
+IDIR = . ../include ../tile
 ODIR = obj
 
 OBJS = $(patsubst %.cpp, $(ODIR)/%.o, $(wildcard *.cpp))
 DEPS = $(wildcard $(IDIR)/*.h)
 
 CXX = g++
-CXXFLAGS = -L$(ODIR) $(patsubst %, -I%,$(IDIR)) -lGL -lGLEW -lglfw -l$(LIBNAME) -std=gnu++17 -L../A/obj -lwhack
+CXXFLAGS = -L$(ODIR) $(patsubst %, -I%,$(IDIR)) -lGL -lGLEW -lglfw -l$(LIBNAME) -std=gnu++17 -L../tile/obj -lwhack -g
 
 default: $(TESTNAME)
 .PHONY: default

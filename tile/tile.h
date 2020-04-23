@@ -26,6 +26,8 @@ public:
 
 inline Tile::Tile()
 {
+    pos = Vec2(0,0);
+    size = Vec2(0,0);
 }
 inline Tile::Tile(float x, float y, float w, float h)
 {

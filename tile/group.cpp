@@ -1,6 +1,8 @@
 #include "group.h"
 #include "modifier.h"
 
+#include <cstdio>
+
 void Group::update() {
     for(Modifier* m : mods){
         m->apply(this);
@@ -18,6 +20,7 @@ void Group::update_all() {
 }
 void Group::add(Tile* t){
     in.push_back(t);
+    t->parent = this;
 }
 void Group::add(Modifier* m){
     mods.push_back(m);

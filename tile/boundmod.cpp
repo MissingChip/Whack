@@ -5,10 +5,12 @@
 using namespace std;
 
 void BoundMod::apply(Group* g){
-    float min_x;
-    float max_x;
-    float min_y;
-    float max_y;
+    if(g->in.size() == 0) return;
+    Vec2& s = g->in[0]->pos;
+    float min_x = s.x;
+    float max_x = s.x;
+    float min_y = s.y;
+    float max_y = s.y;
     for(Tile* t : g->in){
         min_x = min(min_x, t->pos.x);
         min_y = min(min_y, t->pos.y);
@@ -20,11 +22,11 @@ void BoundMod::apply(Group* g){
         t->pos -= dif;
     }
     if(force_size){
-        g->size.x = left + right + max_x - min_x;
-        g->size.y = top + bottom + max_y - min_y;
+        if(bind_x) g->size.x = left + right + max_x - min_x;
+        if(bind_y) g->size.y = top + bottom + max_y - min_y;
     }
     else{
-        g->size.x = min(g->size.x, left + right + max_x - min_x);
-        g->size.y = min(g->size.y, top + bottom + max_y - min_y);
+        if(bind_x)g->size.x = min(g->size.x, left + right + max_x - min_x);
+        if(bind_y)g->size.y = min(g->size.y, top + bottom + max_y - min_y);
     }
 }

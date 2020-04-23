@@ -7,7 +7,7 @@ OBJS = $(patsubst %.cpp, $(ODIR)/%.o, $(wildcard *.cpp))
 DEPS = $(wildcard $(IDIR)/*.h)
 
 CXX = g++
-CXXFLAGS = -I$(IDIR)
+CXXFLAGS = -I$(IDIR) -g
 
 $(ODIR)/libwhack.a: $(OBJS)
 	ar -rcs $(ODIR)/libwhack.a $?

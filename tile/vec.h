@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdlib>
-#include <cstdio>
+//#include <cstdio>
 
 namespace anchors {
     enum Anchor {

@@ -14,7 +14,15 @@ void main()
         FragColor = vec4(color);
     }*/
     vec2 diff = TexCoord-vec2(0.5, 0.5);
-    float m = 1-pow(length(diff), 2);
+    float m = 1-sqrt(length(diff));
     //if(m<0.42) m = 0;
-    FragColor = vec4(color.rgb*m, color.a);
+    if(m>0.85){
+        FragColor = vec4(color.rgb, sqrt(color.a));
+    }
+    else if(m>0.837){
+        FragColor = vec4(vec3(0), color.a);
+    }
+    else{
+        FragColor = vec4(color.rgb*m, color.a);
+    }
 }
