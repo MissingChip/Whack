@@ -6,7 +6,7 @@ IDIR = . ../include ../tile
 ODIR = obj
 
 OBJS = $(patsubst %.cpp, $(ODIR)/%.o, $(wildcard *.cpp))
-DEPS = $(wildcard $(IDIR)/*.h)
+DEPS = $(wildcard ./*.h)
 
 CXX = g++
 CXXFLAGS = -L$(ODIR) $(patsubst %, -I%,$(IDIR)) -lGL -lGLEW -lglfw -l$(LIBNAME) -std=gnu++17 -L../tile/obj -lwhack -g
@@ -17,9 +17,12 @@ default: $(TESTNAME)
 $(ODIR)/lib$(LIBNAME).a: $(OBJS)
 	ar -rcs $(ODIR)/lib$(LIBNAME).a $?
 
-obj/%.o: %.cpp $(DEPS)
+obj/%.o: %.cpp $(DEPS) ../tile/libwhack.a force
 	@mkdir -p $(ODIR)
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
-$(TESTNAME): $(ODIR)/lib$(LIBNAME).a Makefile
-	$(CXX) -o $(TESTNAME) $(TESTNAME).cpp $(CXXFLAGS)
+$(TESTNAME): $(ODIR)/lib$(LIBNAME).a Makefile force
+	$(CXX) -o $@ $@.cpp $(CXXFLAGS)
+
+force:
+.PHONY: force

@@ -1,5 +1,6 @@
 #include "group.h"
 #include "modifier.h"
+#include "mods.h"
 
 #include <cstdio>
 
@@ -24,4 +25,11 @@ void Group::add(Tile* t){
 }
 void Group::add(Modifier* m){
     mods.push_back(m);
+    m->track(this);
+}
+
+Group::~Group(){
+    for(Modifier* mod : mods){
+        mod->forget(this);
+    }
 }

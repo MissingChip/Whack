@@ -9,6 +9,7 @@
 
 #include "visualizer.h"
 #include "whack.h"
+#include "demo.h"
 
 int main(){
     /* Initialize the library */
@@ -38,7 +39,7 @@ int main(){
     if( glewInit() != GLEW_OK ){
         printf("GLEW init error\n");
     }
-
+/*
     Tile t = Tile(0, 0, 50, 24);
     Tile t2(t);
     Tile t3(t);
@@ -76,14 +77,15 @@ int main(){
     g2.add(&win);
     g2.add(&menustretch);
     g2.add(&winstretch);
-
-    Visualizer v(&g3);
+*/
+    Demo d;
+    Visualizer v(&d);
 
     printf("%s\n", glfwGetVersionString());
-    printf("%p %p\n", &g2, &sidemenu);
+    //printf("%p %p\n", &g2, &sidemenu);
     int width, height, pwidth, pheight;
 
-    g3.update_all();
+    //g3.update_all();
     while( !glfwWindowShouldClose( window ) )
     {
         glfwGetWindowSize(window, &width, &height);
@@ -92,10 +94,10 @@ int main(){
             v.size.x = width;
             v.size.y = height;
             
-            g3.size.x = width;
-            g3.size.y = height;
-            g3.update_all();
-            g3.update_all();
+            d.size.x = width;
+            d.size.y = height;
+            d.update_all();
+            d.update_all();
             pwidth = width;
             pheight = height;
 

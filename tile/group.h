@@ -12,7 +12,7 @@ public:
 
     Group(){};
     Group(Tile* t);
-    virtual ~Group(){};
+    virtual ~Group();
     virtual void update();
     virtual void update_all();
     virtual void add(Tile* t);
