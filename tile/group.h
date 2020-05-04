@@ -12,14 +12,22 @@ public:
 
     Group(){};
     Group(Tile* t);
+    Group(float w, float h);
     virtual ~Group();
     virtual void update();
     virtual void update_all();
     virtual void add(Tile* t);
+    virtual void remove(Tile* t);
     virtual void add(Modifier* m);
+    virtual void remove(Modifier* m);
 };
 
 inline Group::Group(Tile* t){
     add(t);
     size = t->size;
+}
+
+inline Group::Group(float w, float h){
+    size.x = w;
+    size.y = h;
 }

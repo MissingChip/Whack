@@ -17,12 +17,9 @@ default: $(TESTNAME)
 $(ODIR)/lib$(LIBNAME).a: $(OBJS)
 	ar -rcs $(ODIR)/lib$(LIBNAME).a $?
 
-obj/%.o: %.cpp $(DEPS) ../tile/libwhack.a force
+obj/%.o: %.cpp $(DEPS) ../tile/libwhack.a
 	@mkdir -p $(ODIR)
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
-$(TESTNAME): $(ODIR)/lib$(LIBNAME).a Makefile force
+$(TESTNAME): $(ODIR)/lib$(LIBNAME).a Makefile
 	$(CXX) -o $@ $@.cpp $(CXXFLAGS)
-
-force:
-.PHONY: force

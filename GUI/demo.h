@@ -4,55 +4,72 @@
 #include "mods.h"
 #include "tracker.h"
 
+class MenuBar : public Group {
+public:
+    MenuBar();
+    RowMod rowmod = RowMod(0);
+    StretchMod stretchmod = StretchMod(anchors::vertical);
+    vector<Tile> opts;
+};
+class Inner : public Group {
+public:
+    Inner();
+    RowMod rowmod = RowMod(0);
+    StretchMod stretchmod = StretchMod(anchors::vertical);
+    FillMod fillmod = FillMod(0);
+    Group ag = Group(200, 0);
+    Group bg;
+};
+
 class Demo : public Group {
 public:
-    Tracker<Tile> t;
+    //Tracker<Tile> t;
+    MenuBar menu;
+    Inner prog;
+    RowMod rowmod = RowMod(1);
+    StretchMod stretchmod = StretchMod(anchors::horizontal);
+    FillMod fillmod = FillMod(1);
     virtual void add(Tile* tile);
     virtual void add(Modifier* mod){Group::add(mod);};
-    virtual void remove(uint id);
-    virtual void remove(Tile* tile);
     virtual void update_all();
     Demo();
     ~Demo();
 };
 
-class Inner : public Group {
+inline MenuBar::MenuBar(){
+    add(&rowmod);
+    add(&stretchmod);
+    for(int i=0;i<5;i++){
+        opts.push_back(Tile(0,0,60,0));
+    }
     
-};
+    for(int i=0;i<5;i++){
+        add(&(opts[i]));
+    }
+    size.y = 30;
+}
+inline Inner::Inner(){
+    add(&rowmod);
+    add(&stretchmod);
+    add(&fillmod);
+    add(&ag);
+    add(&bg);
+}
 
 inline void Demo::add(Tile* tile){
+    if(tile->parent){
+        //parent->remove(tile);
+    }
+    tile->id = in.size();
     Group::add(tile);
-    tile->id = t.add(tile);
-}
-
-inline void Demo::remove(Tile* tile){
-    t.remove(tile->id);
-    delete tile;
-}
-
-inline void Demo::remove(uint id){
-    delete t.remove(id);
 }
 
 inline Demo::Demo(){
-    Group* m = new Group;
-    m->size.y = 30;
-    add(m);
-    Group* p = new Group();
-    p->add(new RowMod(0));
-    m = new Group();
-    m->size.x = 200;
-    p->add(m);
-    m = new Inner();
-    p->add(m);
-    p->add(new StretchMod(anchors::vertical));
-    p->add(new FillMod(0));
-    p->size.y = 200;
-    add(p);
-    add(new RowMod(1));
-    add(new StretchMod(anchors::horizontal));
-    FillMod* a = new FillMod(1);
-    add(new FillMod(1));
+    add(&rowmod);
+    add(&stretchmod);
+    add(&fillmod);
+    add(&menu);
+    add(&prog);
 }
 
 inline void Demo::update_all(){
@@ -61,8 +78,9 @@ inline void Demo::update_all(){
 }
 
 inline Demo::~Demo(){
-    int i = 1;
-    while(t[i]){
-        delete t.remove(i);
-    }
+    //int i = 1;
+    //while(t[i]){
+    //    delete t.remove(i);
+    //    i++;
+    //}
 }
