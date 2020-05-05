@@ -49,5 +49,5 @@ $(obj_dir)/%.o: %.cpp $(decs) $(patsubst %, $(lib_dir)/lib%.$(lib_ext), $(lib_de
 	$(CXX) -c -o $@ $< $(CXXFLAGS) -L$(lib_dir) $(patsubst %, -l%, $(lib_deps)) $(patsubst %, -I%, $(inc_dirs)) $(flags) -I.
 
 visual:
-	$(CXX) -c $@ -L$(lib_dir) $(patsubst lib%.a, -l%, $(wildcard $(lib_dir)/*.a))
+	$(CXX) -o $@ $@.cpp -L$(lib_dir) $(patsubst $(lib_dir)/lib%.a, -l%, $(wildcard $(lib_dir)/*.a)) $(flags)
 .PHONY: visual

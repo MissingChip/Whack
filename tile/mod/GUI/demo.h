@@ -2,7 +2,6 @@
 
 #include "group.h"
 #include "mods.h"
-#include "tracker.h"
 
 class MenuBar : public Group {
 public:

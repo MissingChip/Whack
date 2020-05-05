@@ -9,12 +9,12 @@ lib_ext := .a
 lib_name := $(shell printf '%s' "$${PWD\#\#*/}")
 dec_dir := .
 def_dir := .
-
+inc_dirs := include
 
 #automatic info
 flags += $(uni_flags)
 directories = $(sort $(dir $(filter ./%/, $(wildcard ./*/))))
-lib_q := $(filter-out ./$(obj_stub)/ ./$(lib_stub)/ ./$(inc_dirs)/, $(directories))
+lib_q := $(filter-out ./$(obj_stub)/ ./$(lib_stub)/ $(patsubst %, ./%/, $(inc_dirs)), $(directories))
 
 ifeq (,$(lib_dir))
 lib_dir := lib
