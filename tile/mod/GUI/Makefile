@@ -5,16 +5,16 @@
 flags :=
 obj_stub := obj
 lib_stub := lib
-lib_ext := .a
+lib_ext := a
 lib_name := $(shell printf '%s' "$${PWD\#\#*/}")
 dec_dir := .
 def_dir := .
-
+inc_dirs := include
 
 #automatic info
 flags += $(uni_flags)
 directories = $(sort $(dir $(filter ./%/, $(wildcard ./*/))))
-lib_q := $(filter-out ./$(obj_stub)/ ./$(lib_stub)/, $(directories))
+lib_q := $(filter-out ./$(obj_stub)/ ./$(lib_stub)/ $(patsubst %, ./%/, $(inc_dirs)), $(directories))
 
 ifeq (,$(lib_dir))
 lib_dir := lib
@@ -31,8 +31,8 @@ endif
 
 
 #all child libs, and this lib, if they exist
-lib: $(lib_q) $(lib_file)
-.PHONY: lib
+$(lib_name): $(lib_q) $(lib_file)
+.PHONY: $(lib_name)
 
 $(lib_q): $(lib_file)
 	@make -C ./$@ lib_dir=../$(lib_dir) lib_deps="$(lib_name) $(lib_deps)" inc_dirs="$(patsubst %, ../%, $(inc_dirs)) ../$(dec_dir)" uni_flags=$(uni_flags)
@@ -46,4 +46,4 @@ $(lib_file): $(objs)
 $(obj_dir)/%.o: %.cpp $(decs) $(patsubst %, $(lib_dir)/lib%.$(lib_ext), $(lib_deps))
 	@mkdir -p $(obj_dir)
 	@echo compile $< $(patsubst %, -l%, $(lib_deps))
-	$(CXX) -c -o $@ $< $(CXXFLAGS) -L$(lib_dir) $(patsubst %, -l%, $(lib_deps)) $(patsubst %, -I%, $(inc_dirs)) $(flags) -I.
+	@$(CXX) -c -o $@ $< $(CXXFLAGS) -L$(lib_dir) $(patsubst %, -l%, $(lib_deps)) $(patsubst %, -I%, $(inc_dirs)) $(flags)

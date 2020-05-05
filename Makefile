@@ -5,7 +5,7 @@
 flags :=
 obj_stub := obj
 lib_stub := lib
-lib_ext := .a
+lib_ext := a
 lib_name := $(shell printf '%s' "$${PWD\#\#*/}")
 dec_dir := .
 def_dir := .
@@ -31,8 +31,8 @@ endif
 
 
 #all child libs, and this lib, if they exist
-lib: $(lib_q) $(lib_file)
-.PHONY: lib
+$(lib_name): $(lib_q) $(lib_file)
+.PHONY: $(lib_name)
 
 $(lib_q): $(lib_file)
 	@make -C ./$@ lib_dir=../$(lib_dir) lib_deps="$(lib_name) $(lib_deps)" inc_dirs="$(patsubst %, ../%, $(inc_dirs)) ../$(dec_dir)" uni_flags=$(uni_flags)
@@ -49,6 +49,6 @@ $(obj_dir)/%.o: %.cpp $(decs) $(patsubst %, $(lib_dir)/lib%.$(lib_ext), $(lib_de
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) -L$(lib_dir) $(patsubst %, -l%, $(lib_deps)) $(patsubst %, -I%, $(inc_dirs)) $(flags)
 
 visual:
-	$(CXX) -o $@ tile/mod/GUI/$@.cpp -L$(lib_dir) $(patsubst $(lib_dir)/lib%.a, -l%, $(wildcard $(lib_dir)/*.a)) $(flags)\
-	-std=c++17 -lglfw -lGLEW -lGL -Itile -Itile/mod
+	make lib_dir="$(lib_dir)" lib_deps="$(lib_deps)" inc_dirs="$(inc_dirs)" uni_flags="$(uni_flags) -std=c++17"
+	$(CXX) -o $@ tile/mod/GUI/$@.cpp -L$(lib_dir) $(patsubst $(lib_dir)/lib%.a, -l%, $(wildcard $(lib_dir)/lib*.a)) $(flags) -std=c++17 -lglfw -lGLEW -lGL -Itile -Itile/mod
 .PHONY: visual
