@@ -46,7 +46,7 @@ inline MenuBar::MenuBar(){
     for(int i=0;i<5;i++){
         add(&(opts[i]));
     }
-    size.y = 30;
+    size.y = 24;
 }
 inline Inner::Inner(){
     add(&rowmod);

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "group.h"
-#include "alignmod.h"
-#include "rowmod.h"
+#include "mod/alignmod.h"
+#include "mod/rowmod.h"
 
 class RowBox : public Group {
 public:

@@ -8,7 +8,8 @@
 #include "shader.h"
 
 #include "visualizer.h"
-#include "whack.h"
+#include "group.h"
+#include "mods.h"
 #include "demo.h"
 
 int main(){
