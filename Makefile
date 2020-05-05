@@ -47,3 +47,8 @@ $(obj_dir)/%.o: %.cpp $(decs) $(patsubst %, $(lib_dir)/lib%.$(lib_ext), $(lib_de
 	@mkdir -p $(obj_dir)
 	@echo compile $< $(patsubst %, -l%, $(lib_deps))
 	@$(CXX) -c -o $@ $< $(CXXFLAGS) -L$(lib_dir) $(patsubst %, -l%, $(lib_deps)) $(patsubst %, -I%, $(inc_dirs)) $(flags)
+
+visual:
+	$(CXX) -o $@ tile/mod/GUI/$@.cpp -L$(lib_dir) $(patsubst $(lib_dir)/lib%.a, -l%, $(wildcard $(lib_dir)/*.a)) $(flags)\
+	-std=c++17 -lglfw -lGLEW -lGL -Itile -Itile/mod
+.PHONY: visual
