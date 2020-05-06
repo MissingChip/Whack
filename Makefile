@@ -1,11 +1,13 @@
 
 worker := worker.make
-WORK = cp $(worker) ./$@/$(worker) && make -f worker.make -C ./$@ lib_dir=../lib flags="-std=c++17 $(flags)" && rm ./$@/$(worker)
+WORK = cp $(worker) ./$@/$(worker) && make -f worker.make -C ./$@ lib_dir=../lib flags="-std=c++17 $(flags)"
 GUI: tile
 	$(eval flags := -I../tile)
-	@$(WORK)
+	@$(WORK) lib_deps=mod
+	rm ./$@/$(worker)
 tile:
 	@$(WORK)
+	rm ./$@/$(worker)
 .PHONY: tile
 
 visual: GUI
