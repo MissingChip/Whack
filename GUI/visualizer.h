@@ -33,7 +33,7 @@ public:
     float color[4] = {1.0, 0.95, 1.0, 0.5};
     int coid;
     VertexGroup quad = VertexGroup(sizeof(quadinfo::vertices), quadinfo::vertices, sizeof(quadinfo::indices), quadinfo::indices, 4);
-    Shader shader = Shader::file("/home/ethanf/A/pro/whack/tile/mod/GUI/gui.vs", "/home/ethanf/A/pro/whack/tile/mod/GUI/gui.fs");
+    Shader shader = Shader::file("/home/ethanf/A/pro/whack/GUI/gui.vs", "/home/ethanf/A/pro/whack/GUI/gui.fs");
 
     void draw();
 private:

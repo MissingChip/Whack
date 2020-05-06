@@ -1,9 +1,12 @@
 
-aggr := worker.make
-make_worker = make -f $(aggr) -C ./$@ lib_dir=../lib flags="-std=c++17"
+worker := worker.make
+WORK = cp $(worker) ./$@/$(worker) && make -f worker.make -C ./$@ lib_dir=../lib flags="-std=c++17 $(flags)" && rm ./$@/$(worker)
+GUI: tile
+	$(eval flags := -I../tile -ltile -lmod)
+	@$(WORK)
 tile:
-	@$(make_worker)
+	@$(WORK)
 .PHONY: tile
 
-visual: tile
-	$(CXX) -o $@ tile/mod/GUI/visual.cpp $(CXXFLAGS) -Llib $(patsubst lib/lib%.a, -l%, $(wildcard lib/lib*.a)) -lglfw -lGLEW -lGL -Itile -std=c++17
+visual: GUI
+	$(CXX) -o $@ GUI/visual.cpp $(CXXFLAGS) -Llib $(patsubst lib/lib%.a, -l%, $(wildcard lib/lib*.a)) -lglfw -lGLEW -lGL -Itile -std=c++17
