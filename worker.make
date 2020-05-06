@@ -2,6 +2,7 @@
 
 #lib info
 #	(can be user-controlled)
+flags := 
 this = worker.make
 lib_dir := lib
 obj_dir := obj
