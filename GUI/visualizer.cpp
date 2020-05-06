@@ -6,31 +6,27 @@ using namespace glm;
 
 
 namespace quadinfo{
-    float vertices[16] {
+    float vertices[] {
             // positions    // texture coords
             1.0f, 1.0f,     1.0f, 1.0f,   // top right
             1.0f, 0.0f,     1.0f, 0.0f,   // bottom right
             0.0f, 0.0f,     0.0f, 0.0f,   // bottom left
             0.0f, 1.0f,     0.0f, 1.0f    // top left 
     };
-    unsigned int indices[6]{
+    unsigned int indices[]{
         0, 1, 3,   // first triangle
         1, 2, 3    // second triangle
     };
 }
 
-Visualizer::Visualizer() : quad{VertexGroup(sizeof(float)*16, quadinfo::vertices, sizeof(uint)*6, quadinfo::indices, 4)}{
+Visualizer::Visualizer() : quad{VertexGroup(sizeof(quadinfo::vertices), quadinfo::vertices, sizeof(quadinfo::indices), quadinfo::indices, 4)}{
     quad.attribute(1, 2, 2);
     transform = glm::ortho<double>(0, 1, 0, 1, -1, 1);
     trid = glGetUniformLocation(shader.id, "transform");
     coid = glGetUniformLocation(shader.id, "color");
 }
-Visualizer::Visualizer(Tile* r) : quad{VertexGroup(sizeof(float)*16, quadinfo::vertices, sizeof(uint)*6, quadinfo::indices, 4)}{
+Visualizer::Visualizer(Tile* r) : Visualizer(){
     root = r;
-    quad.attribute(1, 2, 2);
-    transform = glm::ortho<double>(0, 1, 0, 1, -1, 1);
-    trid = glGetUniformLocation(shader.id, "transform");
-    coid = glGetUniformLocation(shader.id, "color");
 }
 void Visualizer::draw(){
 
