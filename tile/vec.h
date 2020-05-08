@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdlib>
+#include <glm/vec2.hpp>
 //#include <cstdio>
 
 namespace anchors {
@@ -37,6 +38,7 @@ public:
     Vec2& operator-=(Vec2 v){x-=v.x; y-=v.y; return *this;};
     Vec2& operator*=(Vec2 v){x*=v.x; y*=v.y; return *this;};
     Vec2& operator/=(Vec2 v){x/=v.x; y/=v.y; return *this;};
+    explicit operator glm::vec2() { return glm::vec2(x, y); }; 
 };
 class Vec4 {
 public:

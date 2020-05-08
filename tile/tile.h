@@ -9,6 +9,7 @@ public:
     Vec2 pos;
     Vec2 size;
     Group* parent = nullptr;
+    void* data = nullptr;
     bool in_use;
     uint id;
     //bool visible;
