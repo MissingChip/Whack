@@ -17,9 +17,13 @@ public:
     virtual void update();
     virtual void update_all();
     virtual void add(Tile* t);
-    virtual void remove(Tile* t);
     virtual void add(Modifier* m);
+    virtual void insert(Modifier* m, int index);
+    virtual void insert(Tile* t, int index);
+    virtual void remove(Tile* t);
     virtual void remove(Modifier* m);
+    virtual int idx_of(Tile* t);
+    virtual int idx_of(Modifier* t);
 };
 
 inline Group::Group(Tile* t){

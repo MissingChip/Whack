@@ -3,7 +3,7 @@ worker := worker.make
 WORK = cp $(worker) ./$@/$(worker) && make -f worker.make -C ./$@ lib_dir=../lib flags="-std=c++17 $(flags)"
 BURY = rm ./$@/$(worker)
 GUI: tile
-	$(eval flags := -I../tile)
+	$(eval flags += -I../tile)
 	@$(WORK) lib_deps=mod
 	@$(BURY)
 tile:

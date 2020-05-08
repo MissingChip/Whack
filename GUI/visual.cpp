@@ -40,45 +40,7 @@ int main(){
     if( glewInit() != GLEW_OK ){
         printf("GLEW init error\n");
     }
-/*
-    Tile t = Tile(0, 0, 50, 24);
-    Tile t2(t);
-    Tile t3(t);
-    Tile t4(t);
-    t.size.x = 40;
-    t2.size.x = 60;
-    RowBox g(&t);
-    g.add(&t2);
-    g.add(&t3);
-    g.add(&t4);
-    BoundMod bm;
-    bm.bind_x = false;
-    g.add(&bm);
-    RowBox g2;
-    RowBox g3(&g);
-    g3.add(&g2);
-    FillMod f;
-    g3.add(&f);
-    f.direction = 1;
-    StretchMod s(anchors::horizontal);
-    g3.add(&s);
-    g.set_direction(0);
-    g2.set_direction(0);
-    g3.set_direction(1);
-    g3.rowmod.resize_on_update = false;
 
-    StretchMod menustretch(anchors::vertical);
-    Group sidemenu;
-    FillMod winstretch;
-    winstretch.direction = 0;
-    Group win;
-    sidemenu.size.x = 240;
-    sidemenu.size.y = 300;
-    g2.add(&sidemenu);
-    g2.add(&win);
-    g2.add(&menustretch);
-    g2.add(&winstretch);
-*/
     Demo d;
     Visualizer v(&d);
 
@@ -97,6 +59,7 @@ int main(){
             
             d.size.x = width;
             d.size.y = height;
+            d.update_all();
             d.update_all();
             d.update_all();
             pwidth = width;

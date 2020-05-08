@@ -19,12 +19,19 @@ public:
     Group ag = Group(200, 0);
     Group bg;
 };
+class Margins : public Group {
+public:
+    Margins();
+    //StretchMod stretchmod = StretchMod(anchors::all);
+    MarginMod margins = MarginMod(10, 20);
+    Inner i = Inner();
+};
 
 class Demo : public Group {
 public:
     //Tracker<Tile> t;
     MenuBar menu;
-    Inner prog;
+    Margins m;
     RowMod rowmod = RowMod(1);
     StretchMod stretchmod = StretchMod(anchors::horizontal);
     FillMod fillmod = FillMod(1);
@@ -54,6 +61,12 @@ inline Inner::Inner(){
     add(&ag);
     add(&bg);
 }
+inline Margins::Margins(){
+    //add(&stretchmod);
+    add(&margins);
+    i.size=Vec2(10000, 10000);
+    add(&i);
+}
 
 inline void Demo::add(Tile* tile){
     if(tile->parent){
@@ -68,7 +81,7 @@ inline Demo::Demo(){
     add(&stretchmod);
     add(&fillmod);
     add(&menu);
-    add(&prog);
+    add(&m);
 }
 
 inline void Demo::update_all(){
