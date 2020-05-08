@@ -6,7 +6,7 @@ using namespace std;
 
 void BoundMod::apply(Group* g){
     if(g->in.size() == 0) return;
-    Vec2& s = g->in[0]->pos;
+    glm::vec2& s = g->in[0]->pos;
     float min_x = s.x;
     float max_x = s.x;
     float min_y = s.y;
@@ -17,7 +17,7 @@ void BoundMod::apply(Group* g){
         max_x = max(max_x, t->pos.x+t->size.x);
         max_y = max(max_y, t->pos.y+t->size.y);
     }
-    Vec2 dif = Vec2(min_x - left, min_y - top);
+    glm::vec2 dif = glm::vec2(min_x - left, min_y - top);
     for(Tile* t : g->in){
         t->pos -= dif;
     }

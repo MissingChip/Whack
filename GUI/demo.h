@@ -64,7 +64,7 @@ inline Inner::Inner(){
 inline Margins::Margins(){
     //add(&stretchmod);
     add(&margins);
-    i.size=Vec2(10000, 10000);
+    i.size=glm::vec2(10000, 10000);
     add(&i);
 }
 

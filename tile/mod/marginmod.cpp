@@ -14,7 +14,7 @@ MarginMod::MarginMod(float t, float r, float b, float l){
 }
 
 void MarginMod::apply(Group* g){
-    Vec2 size = Vec2(g->size.x - left - right, g->size.y - top - bottom);
+    glm::vec2 size = glm::vec2(g->size.x - left - right, g->size.y - top - bottom);
     for(Tile* t : g->in){
         if(fill){
             t->size = size;
@@ -48,7 +48,7 @@ void MarginMod::apply(Group* g){
         //printf("BF%f %f, %f %f\n", t->size.x, t->size.y, t->pos.x, t->pos.y);
         }
         //printf("B%f %f, %f %f, %f %f\n", t->size.x, t->size.y, t->pos.x, t->pos.y, g->size.x, g->size.y);
-        /* t->pos = Vec2(0,0);
-        t->size = Vec2(100,100); */
+        /* t->pos = glm::vec2(0,0);
+        t->size = glm::vec2(100,100); */
     }
 }

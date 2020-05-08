@@ -8,7 +8,7 @@ void FillMod::apply(Group* g){
         return;
     }
     int idx = index<0 ? m+index : index;
-    Vec2 space = g->size;
+    glm::vec2 space = g->size;
     for(int i=0;i<m;i++){
         if(i == idx) continue;
         space -= g->in[i]->size;

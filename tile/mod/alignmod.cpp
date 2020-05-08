@@ -15,8 +15,8 @@ void AlignMod::apply(Group* g){
 }
 void AlignMod::align_tile(Tile* t, Group* g){
     int& a = anchor;
-    Vec2& pos = g->pos;
-    Vec2& size = g->size;
+    glm::vec2& pos = g->pos;
+    glm::vec2& size = g->size;
     
     if(a & left){
         if(a & right) {

@@ -37,7 +37,7 @@ void Visualizer::draw(){
     draw(root);
 }
 void Visualizer::draw(Tile* t){
-    Vec2 pos = t->global_pos();
+    glm::vec2 pos = t->global_pos();
     transform[0][0] = 2*t->size.x/size.x;
     transform[1][1] = -(2*t->size.y/size.y);
     transform[3][0] = 2*pos.x/size.x-1;
