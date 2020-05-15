@@ -13,13 +13,22 @@ class PageDemo : public Row {
 public:
     PageDemo();
 
-    Row inner;
     MenuBar menu;
+    Row inner;
+    StretchMod stretchmod = StretchMod(anchors::horizontal);
     FillMod fillmod;
+
+    virtual void update();
 };
 
 inline PageDemo::PageDemo() : Row() {
     add(&menu);
     add(&inner);
     group.add(&fillmod); 
+    group.add(&stretchmod); 
+}
+
+void PageDemo::update() {
+    Row::update();
+    //printf("%f %f\n", inner.tile->size.x, inner.tile->size.y);
 }
