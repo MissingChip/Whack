@@ -10,13 +10,14 @@ public:
     glm::vec2 pos;
     glm::vec2 size;
     Group* parent = nullptr;
-    void* data = nullptr;
+    //void* data = nullptr;
     bool in_use;
     uint id;
     //bool visible;
 
     Tile();
     Tile(float x, float y, float w, float h);
+    Tile(float w, float h) : Tile(0, 0, w, h) {};
     virtual ~Tile();
 
     virtual void update(){};

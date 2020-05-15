@@ -10,7 +10,8 @@
 #include "visualizer.h"
 #include "group.h"
 #include "mods.h"
-#include "demo.h"
+//#include "demo.h"
+#include "pagedemo.h"
 
 int main(){
     /* Initialize the library */
@@ -41,8 +42,10 @@ int main(){
         printf("GLEW init error\n");
     }
 
-    Demo d;
-    Visualizer v(&d);
+    //Demo d;
+    PageDemo b;
+    Visualizer v (b.tile);
+    Tile& d = *b.tile;
 
     printf("%s\n", glfwGetVersionString());
     //printf("%p %p\n", &g2, &sidemenu);
@@ -59,9 +62,7 @@ int main(){
             
             d.size.x = width;
             d.size.y = height;
-            d.update_all();
-            d.update_all();
-            d.update_all();
+            b.update();
             pwidth = width;
             pheight = height;
 

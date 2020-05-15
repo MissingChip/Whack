@@ -3,12 +3,14 @@
 #include "group.h"
 #include "mods.h"
 
+#include <vector>
+
 class MenuBar : public Group {
 public:
     MenuBar();
     RowMod rowmod = RowMod(0);
     StretchMod stretchmod = StretchMod(anchors::vertical);
-    vector<Tile> opts;
+    std::vector<Tile> opts;
 };
 class Inner : public Group {
 public:
