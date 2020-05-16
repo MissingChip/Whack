@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <thread>
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include "gl.h"
@@ -57,6 +58,8 @@ int main(){
     {
         glfwGetCursorPos(window, &xpos, &ypos);
         
+        //printf("mouse %f %f\n", xpos, ypos);
+        std::this_thread::sleep_for (std::chrono::milliseconds(20));
         state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
         if (state == GLFW_PRESS && pstate == GLFW_RELEASE)
         {

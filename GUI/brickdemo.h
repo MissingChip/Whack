@@ -30,7 +30,7 @@ inline BrickDemo::BrickDemo() : Row() {
     add(&inner);
     group.add(&fillmod); 
     group.add(&stretchmod);
-    menu.bricks[0]->on_click = menu1click;
+    menu.bricks[1]->on_click = menu1click;
 }
 
 void BrickDemo::update() {
