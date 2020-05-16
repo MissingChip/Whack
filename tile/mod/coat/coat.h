@@ -6,10 +6,12 @@
 
 class Coat {
 public:
-    Tile* tile;
+    Tile* tile = nullptr;
+    //Coat* parent = nullptr;
     std::vector<Coat*> pages;
     void attach(Tile* t);
     virtual void update();
+    //virtual void shout();
     virtual void add(Coat* p);
     virtual void insert(Coat* p, int index);
     virtual void remove(Coat* p);

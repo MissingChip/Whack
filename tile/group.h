@@ -16,6 +16,7 @@ public:
     virtual ~Group();
     virtual void update();
     virtual void update_all();
+    virtual void shout();
     virtual void add(Tile* t);
     virtual void add(Modifier* m);
     virtual void insert(Modifier* m, int index);

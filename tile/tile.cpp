@@ -8,3 +8,9 @@ glm::vec2 Tile::global_pos(){
     }
     return pos;
 }
+
+void Tile::shout(){
+    if(parent){
+        parent->shout();
+    }
+}

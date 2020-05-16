@@ -11,5 +11,4 @@ public:
     virtual ~MenuBar();
     RowMod rowmod = RowMod(0);
     StretchMod stretchmod = StretchMod(anchors::vertical);
-    std::vector<Coat*> opts;
 };

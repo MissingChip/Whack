@@ -49,11 +49,22 @@ int main(){
 
     printf("%s\n", glfwGetVersionString());
     //printf("%p %p\n", &g2, &sidemenu);
-    int width, height, pwidth, pheight;
+    int width, height, pwidth, pheight, state = GLFW_RELEASE, pstate = GLFW_RELEASE;
+    double xpos, ypos;
 
     //g3.update_all();
     while( !glfwWindowShouldClose( window ) )
     {
+        glfwGetCursorPos(window, &xpos, &ypos);
+        
+        state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
+        if (state == GLFW_PRESS && pstate == GLFW_RELEASE)
+        {
+            printf("clicked %f %f\n", xpos, ypos);
+            b.clicked(glm::vec2(xpos, ypos));
+        }
+        pstate = state;
+
         glfwGetWindowSize(window, &width, &height);
         if(pwidth != width || pheight != height){
             glViewport(0, 0, width, height);

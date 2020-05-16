@@ -9,6 +9,10 @@ void Group::update() {
         m->apply(this);
     }
 }
+void Group::shout() {
+    update();
+    Tile::shout();
+}
 void Group::update_all() {
     for(Tile* t : in){
         if(Group* g = dynamic_cast<Group*>(t)){

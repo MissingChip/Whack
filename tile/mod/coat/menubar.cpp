@@ -8,17 +8,13 @@ MenuBar::MenuBar(int numopts){
     g->add(&rowmod);
     g->add(&stretchmod);
     for(int i=0;i<numopts;i++){
-        opts.push_back(new Label());
-    }
-    
-    for(int i=0;i<numopts;i++){
-        g->add(opts[i]->tile);
+        add(new Label());
     }
     g->size.y = 24;
 }
 
 MenuBar::~MenuBar(){
-    for(Coat* o : opts){
+    for(Coat* o : pages){
         delete o;
     }
 }

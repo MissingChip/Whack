@@ -22,6 +22,7 @@ public:
 
     virtual void update(){};
     virtual void update_all(){};
+    virtual void shout();
     glm::vec2 global_pos();
     void ssize(glm::vec2& s);
     void spos(glm::vec2& s);

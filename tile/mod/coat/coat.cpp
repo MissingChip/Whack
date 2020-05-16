@@ -44,8 +44,22 @@ void Coat::update(){
             size = g->size;
         }
     }
-
 }
+/*
+void Coat::shout(){
+    Group* g = dynamic_cast<Group*>(tile);
+    if(g){
+        glm::vec2 size = g->size;
+        for(int i=0;i<update_threshold;i++){
+            g->update();
+            if(g->size == size){
+                break;
+            }
+            size = g->size;
+        }
+    }
+
+}*/
 
 void Coat::add(Coat* p){
     pages.push_back(p);
