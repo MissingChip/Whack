@@ -1,9 +1,9 @@
 #pragma once
 
-#include "coat.h"
+#include "brick.h"
 #include <string>
 
-class Label : public Coat {
+class Label : public Brick {
 public:
     std::string text;
     Label(std::string text = "");

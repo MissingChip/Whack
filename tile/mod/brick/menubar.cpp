@@ -14,7 +14,7 @@ MenuBar::MenuBar(int numopts){
 }
 
 MenuBar::~MenuBar(){
-    for(Coat* o : pages){
+    for(Brick* o : bricks){
         delete o;
     }
 }

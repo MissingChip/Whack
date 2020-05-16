@@ -4,18 +4,18 @@
 #include <glm/vec2.hpp>
 #include "tile.h"
 
-class Coat {
+class Brick {
 public:
     Tile* tile = nullptr;
-    //Coat* parent = nullptr;
-    std::vector<Coat*> pages;
+    //Brick* parent = nullptr;
+    std::vector<Brick*> bricks;
     void attach(Tile* t);
     virtual void update();
     //virtual void shout();
-    virtual void add(Coat* p);
-    virtual void insert(Coat* p, int index);
-    virtual void remove(Coat* p);
-    virtual int idx_of(Coat* p);
+    virtual void add(Brick* p);
+    virtual void insert(Brick* p, int index);
+    virtual void remove(Brick* p);
+    virtual int idx_of(Brick* p);
     virtual void clicked(glm::vec2 pos);
     //virtual void clicked_off(glm::vec2 pos);
     void (*on_click)(glm::vec2 pos) = nullptr;

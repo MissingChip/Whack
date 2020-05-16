@@ -11,7 +11,7 @@
 #include "group.h"
 #include "mods.h"
 //#include "demo.h"
-#include "pagedemo.h"
+#include "brickdemo.h"
 
 int main(){
     /* Initialize the library */
@@ -43,7 +43,7 @@ int main(){
     }
 
     //Demo d;
-    PageDemo b;
+    BrickDemo b;
     Visualizer v (b.tile);
     Tile& d = *b.tile;
 

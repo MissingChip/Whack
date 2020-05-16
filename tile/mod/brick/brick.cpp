@@ -1,14 +1,14 @@
 
-#include "coat.h"
+#include "brick.h"
 #include "group.h"
 
-void Coat::attach(Tile* t){
+void Brick::attach(Tile* t){
     tile = t;
 }
 
-void Coat::clicked(glm::vec2 pos){
+void Brick::clicked(glm::vec2 pos){
     if(on_click) on_click(pos);
-    for(Coat* p : pages){
+    for(Brick* p : bricks){
         glm::vec2& pp = p->tile->pos; //page pos
         glm::vec2& ps = p->tile->size;//page size
         if(pp.x < pos.x && pp.x + ps.x > pos.x && 
@@ -19,7 +19,7 @@ void Coat::clicked(glm::vec2 pos){
     }
 }
 
-void Coat::update(){
+void Brick::update(){
     Group* g = dynamic_cast<Group*>(tile);
     if(g){
         glm::vec2 size = g->size;
@@ -31,7 +31,7 @@ void Coat::update(){
             size = g->size;
         }
     }
-    for(Coat* p : pages){
+    for(Brick* p : bricks){
         p->update();
     }
     if(g){
@@ -61,27 +61,27 @@ void Coat::shout(){
 
 }*/
 
-void Coat::add(Coat* p){
-    pages.push_back(p);
+void Brick::add(Brick* p){
+    bricks.push_back(p);
     if(Group* g = dynamic_cast<Group*>(tile)){
         g->add(p->tile);
     }
 }
-void Coat::insert(Coat* p, int index){
-    if(index<0) index=pages.size()+index;
-    pages.insert(pages.begin()+index,p);
+void Brick::insert(Brick* p, int index){
+    if(index<0) index=bricks.size()+index;
+    bricks.insert(bricks.begin()+index,p);
 }
-void Coat::remove(Coat* p){
-    for(int i=0;i<pages.size();i++){
-        if(pages[i] == p){
-            pages.erase(pages.begin()+i);
+void Brick::remove(Brick* p){
+    for(int i=0;i<bricks.size();i++){
+        if(bricks[i] == p){
+            bricks.erase(bricks.begin()+i);
             return;
         }
     }
 }
-int Coat::idx_of(Coat* p){
-    for(int i=0;i<pages.size();i++){
-        if(pages[i] == p){
+int Brick::idx_of(Brick* p){
+    for(int i=0;i<bricks.size();i++){
+        if(bricks[i] == p){
             return i;
         }
     }

@@ -1,9 +1,9 @@
 #pragma once
 #include "group.h"
 #include "mods.h"
-#include "../tile/mod/coat/coat.h"
-#include "../tile/mod/coat/menubar.h"
-#include "../tile/mod/coat/row.h"
+#include "../tile/mod/brick/brick.h"
+#include "../tile/mod/brick/menubar.h"
+#include "../tile/mod/brick/row.h"
 
 #include <vector>
 
@@ -13,9 +13,9 @@ void menu1click(glm::vec2 pos){
     printf("aaa\n");
 }
 
-class PageDemo : public Row {
+class BrickDemo : public Row {
 public:
-    PageDemo();
+    BrickDemo();
 
     MenuBar menu;
     Row inner;
@@ -25,15 +25,15 @@ public:
     virtual void update();
 };
 
-inline PageDemo::PageDemo() : Row() {
+inline BrickDemo::BrickDemo() : Row() {
     add(&menu);
     add(&inner);
     group.add(&fillmod); 
     group.add(&stretchmod);
-    menu.pages[0]->on_click = menu1click;
+    menu.bricks[0]->on_click = menu1click;
 }
 
-void PageDemo::update() {
+void BrickDemo::update() {
     Row::update();
     //printf("%f %f\n", inner.tile->size.x, inner.tile->size.y);
 }

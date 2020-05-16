@@ -1,11 +1,11 @@
 #pragma once
 
 #include "mods.h"
-#include "coat.h"
+#include "brick.h"
 
 #include <vector>
 
-class MenuBar : public Coat {
+class MenuBar : public Brick {
 public:
     MenuBar(int numopts=5);
     virtual ~MenuBar();

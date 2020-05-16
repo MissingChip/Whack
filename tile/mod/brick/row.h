@@ -1,9 +1,9 @@
 #pragma once
 
-#include "coat.h"
+#include "brick.h"
 #include "mods.h"
 
-class Row : public Coat{
+class Row : public Brick{
 public:
     Group group;
     AlignMod alignmod = AlignMod();
