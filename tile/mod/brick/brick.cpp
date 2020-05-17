@@ -5,7 +5,6 @@
 void Brick::attach(Tile* t){
     tile = t;
 }
-
 void Brick::clicked(glm::vec2 pos){
     if(on_click) on_click(pos);
     for(Brick* p : bricks){
@@ -15,9 +14,42 @@ void Brick::clicked(glm::vec2 pos){
                 pp.y < pos.y && pp.y + ps.y > pos.y){
             p->clicked(pos-pp);
         }
-        //p->clicked_off(pos-pp);
     }
 }
+/*
+void Brick::clicked(glm::vec2 pos, int button){
+    if(on_click) on_click(pos, button);
+    for(Brick* p : bricks){
+        glm::vec2& pp = p->tile->pos; //page pos
+        glm::vec2& ps = p->tile->size;//page size
+        if(pp.x < pos.x && pp.x + ps.x > pos.x && 
+                pp.y < pos.y && pp.y + ps.y > pos.y){
+            p->clicked(pos-pp, button);
+        }
+    }
+}
+void Brick::mouse(glm::vec2 pos){
+    if(on_mouse) on_mouse(pos);
+    for(Brick* p : bricks){
+        glm::vec2& pp = p->tile->pos; //page pos
+        glm::vec2& ps = p->tile->size;//page size
+        if(pp.x < pos.x && pp.x + ps.x > pos.x && 
+                pp.y < pos.y && pp.y + ps.y > pos.y){
+            p->mouse(pos-pp);
+        }
+    }
+}
+void Brick::released(glm::vec2 pos, int button){
+    if(on_release) on_release(pos, button);
+    for(Brick* p : bricks){
+        glm::vec2& pp = p->tile->pos; //page pos
+        glm::vec2& ps = p->tile->size;//page size
+        if(pp.x < pos.x && pp.x + ps.x > pos.x && 
+                pp.y < pos.y && pp.y + ps.y > pos.y){
+            p->released(pos-pp, button);
+        }
+    }
+}*/
 
 void Brick::update(){
     Group* g = dynamic_cast<Group*>(tile);

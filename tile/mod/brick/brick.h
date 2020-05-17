@@ -16,9 +16,16 @@ public:
     virtual void insert(Brick* p, int index);
     virtual void remove(Brick* p);
     virtual int idx_of(Brick* p);
+
     virtual void clicked(glm::vec2 pos);
-    //virtual void clicked_off(glm::vec2 pos);
     void (*on_click)(glm::vec2 pos) = nullptr;
+    //virtual void clicked(glm::vec2 pos, int button);
+    //virtual void mouse(glm::vec2 pos);
+    //virtual void released(glm::vec2 pos, int button);
+    //virtual void clicked_off(glm::vec2 pos);
+    //void (*on_click)(glm::vec2 pos, int button) = nullptr;
+    //void (*on_mouse)(glm::vec2 pos) = nullptr;
+    //void (*on_release)(glm::vec2 pos, int button) = nullptr;
 
     static const uint update_threshold = 8;
 };

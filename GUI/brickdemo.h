@@ -12,6 +12,9 @@ using namespace std;
 void menu1click(glm::vec2 pos){
     printf("aaa\n");
 }
+void menu1release(glm::vec2 pos){
+    printf("bbb\n");
+}
 
 class BrickDemo : public Row {
 public:
@@ -31,6 +34,7 @@ inline BrickDemo::BrickDemo() : Row() {
     group.add(&fillmod); 
     group.add(&stretchmod);
     menu.bricks[1]->on_click = menu1click;
+    //menu.bricks[1]->on_release = menu1release;
 }
 
 void BrickDemo::update() {

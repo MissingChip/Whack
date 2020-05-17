@@ -5,6 +5,9 @@
 #include <glm/gtx/transform.hpp>
 #include "gl.h"
 
+#include <ft2build.h>
+#include FT_FREETYPE_H  
+
 #include "vertex_group.h"
 #include "shader.h"
 
@@ -15,6 +18,34 @@
 #include "brickdemo.h"
 
 int main(){
+    FT_Library ft;
+    if (FT_Init_FreeType(&ft))
+        printf("ERROR::FREETYPE: Could not init FreeType Library\n");
+
+    FT_Face face;
+    if (FT_New_Face(ft, "fonts/dejavu/DejaVuSans.ttf", 0, &face))
+        printf("ERROR::FREETYPE: Failed to load font\n");
+
+    FT_Set_Pixel_Sizes(face, 0, 48);
+
+    if (FT_Load_Char(face, 'X', FT_LOAD_RENDER))
+        printf("ERROR::FREETYTPE: Failed to load Glyph\n");
+    /*
+    int charw = face->glyph->bitmap.width;
+    int charh = face->glyph->bitmap.rows;
+    for(int i = 0;i<charh; i++){
+        for(int j = 0;j<charw; j++){
+            if(face->glyph->bitmap.buffer[i*charw + j] > 126){
+                printf("\u2022");
+            }else if(face->glyph->bitmap.buffer[i*charw + j] > 0){
+                printf(" ");
+            }else{
+                printf(" ");
+            }
+        }
+        printf("\n");
+    }
+    */
     /* Initialize the library */
     if (!glfwInit()){
         printf("GLFW init error\n");
@@ -65,7 +96,12 @@ int main(){
         {
             printf("clicked %f %f\n", xpos, ypos);
             b.clicked(glm::vec2(xpos, ypos));
-        }
+        }/*
+        else if (state == GLFW_RELEASE && pstate == GLFW_PRESS)
+        {
+            printf("clicked %f %f\n", xpos, ypos);
+            b.released(glm::vec2(xpos, ypos));
+        }*/
         pstate = state;
 
         glfwGetWindowSize(window, &width, &height);
