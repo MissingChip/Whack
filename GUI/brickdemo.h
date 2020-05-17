@@ -9,10 +9,10 @@
 
 using namespace std;
 
-void menu1click(glm::vec2 pos){
+void menu1click(glm::vec2 pos, int b){
     printf("aaa\n");
 }
-void menu1release(glm::vec2 pos){
+void menu1release(glm::vec2 pos, int b){
     printf("bbb\n");
 }
 
@@ -34,7 +34,7 @@ inline BrickDemo::BrickDemo() : Row() {
     group.add(&fillmod); 
     group.add(&stretchmod);
     menu.bricks[1]->on_click = menu1click;
-    //menu.bricks[1]->on_release = menu1release;
+    menu.bricks[1]->on_release = menu1release;
 }
 
 void BrickDemo::update() {
