@@ -4,7 +4,7 @@ WORK = cp $(worker) ./$@/$(worker) && make -f worker.make -C ./$@ lib_dir=../lib
 BURY = rm ./$@/$(worker)
 GUI: tile
 	$(eval flags += -I../tile -I../tile/mod/page -I/usr/local/include/freetype2 )
-	@$(WORK) lib_deps=mod
+	@$(WORK) lib_deps="mod brick"
 	@$(BURY)
 tile:
 	@$(WORK)

@@ -5,6 +5,7 @@
 class AlignMod : public Modifier{
 public:
     int anchor = anchors::left;
+    virtual ~AlignMod() = default;
 
     void anchor_to(int a){anchor = a;};
 

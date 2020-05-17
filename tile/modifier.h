@@ -10,5 +10,4 @@ class Modifier {
 public:
 
     virtual void apply(Group*) = 0;
-    virtual void update(){};
 };

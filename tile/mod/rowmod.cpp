@@ -5,6 +5,8 @@
 
 using namespace std;
 
+RowMod::RowMod(bool direction, float spacing, bool resize) : direction{direction}, resize_on_update{resize}, spacing{spacing} {}
+
 void RowMod::apply(Group* g){
     bool& o = direction;
     vector<Tile*>& in = g->in;
