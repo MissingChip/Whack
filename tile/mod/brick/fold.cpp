@@ -15,48 +15,89 @@ Fold::~Fold(){
 
 void Fold::clicked(glm::vec2 pos, int button){
     if(!drag){
-        if(pos.x-tile->size.x < trigger.x && pos.y < trigger.y){
-            drag = bricks.size();
-            trigger_pos = glm::vec2(tile->size.x, 0);
+        Group* g = static_cast<Group*>(tile);
+        for(int i=0;i<g->in.size();i++){
+            Tile* t = g->in[i];
+            if(pos.x + trigger.x > t->pos.x + t->size.x && pos.x < t->pos.x + t->size.x){
+                if( pos.y < trigger.y ){
+                    drag = i+1;
+                    trigger_pos = glm::vec2(t->pos.x+t->size.x, 0);
+                }else if(dir == 0 && g->in.size()-1 > i){
+                    drag = i+1;
+                    trigger_pos = glm::vec2(g->in[i+1]->pos.x+g->in[i+1]->size.x, 0);
+                    created = true;
+                }
+            }
+            else if(pos.x - trigger.x < t->pos.x + t->size.x && pos.x > t->pos.x + t->size.x){
+                if( pos.y < trigger.y ){
+                    drag = i+1;
+                    trigger_pos = glm::vec2(t->pos.x+t->size.x, 0);
+                }else if(dir == 0 && g->in.size()-1 > i){
+                    drag = i+1;
+                    trigger_pos = glm::vec2(g->in[i+1]->pos.x+g->in[i+1]->size.x, 0);
+                    created = true;
+                }
+            }
         }
+    }
+    else{
+        Brick::clicked(pos, button);
     }
 }
 
 void Fold::mouse(glm::vec2 pos){
     //printf("moused fold %f %f\n", pos.x, pos.y);
     if(drag){
-        if(trigger_pos.x-pos.x>trigger.x*2){
-            if(dir_unset()){
-                dir = 0;
+        if(bricks.size() == 1){
+            dir = -1;
+        }
+        for(int i=0;i<2;i++){
+            if(pos[i] < trigger_pos[i]-trigger[i]*2){
+                if(dir_unset()){
+                    dir = i;
+                }
+                if(dir == i){
+                    if(!created){
+                        Brick* b = new_empty();
+                        b->tile->pos = glm::vec2(trigger_pos[i], 0);
+                        insert(b, drag);
+                        created = true;
+                    }
+                    Brick* b = bricks[drag-1];
+                    
+                    if(pos[i] > bricks[drag-1]->tile->pos[i] + trigger[i]){
+                        bricks[drag-1]->tile->size[i] = pos[i] - bricks[drag-1]->tile->pos[i];
+                        bricks[drag]->tile->size[i] = trigger_pos[i] - pos[i];
+                        bricks[drag]->tile->pos[i] = pos[i];
+                    }
+                    else{
+                        bricks[drag-1]->tile->size[i] = trigger[i];
+                        bricks[drag]->tile->size[i] = trigger_pos[i] - bricks[drag-1]->tile->size[i] - bricks[drag-1]->tile->pos[i];
+                        bricks[drag]->tile->pos[i] = bricks[drag-1]->tile->pos[i] + trigger[i];
+                    }
+                }
             }
-            if(dir == 0){
-                //printf("aaaa\n");
-                if(!created){
-                    Brick* b = new_empty();
-                    b->tile->pos = glm::vec2(trigger_pos.x, 0);
-                    insert(b, drag);
-                    created = true;
-                }
-                Brick* b = bricks[drag-1];
-                
-                if(pos.x > bricks[drag-1]->tile->pos.x + trigger.x){
-                    bricks[drag-1]->tile->size.x = pos.x - bricks[drag-1]->tile->pos.x;
-                    bricks[drag]->tile->size.x = trigger_pos.x - pos.x;
-                    bricks[drag]->tile->pos.x = pos.x;
-                }
-                else{
-                    bricks[drag-1]->tile->size.x = trigger.x;
-                    bricks[drag]->tile->size.x = trigger_pos.x - bricks[drag-1]->tile->size.x - bricks[drag-1]->tile->pos.x;
-                    bricks[drag]->tile->pos.x = bricks[drag-1]->tile->pos.x + trigger.x;
-                }
+            if(created && pos[i] > trigger_pos[i] - trigger[i] && dir == i){
+                bricks[drag-1]->tile->size[i] += bricks[drag]->tile->size[i];
+                remove(bricks[drag]);
+                //TODO this is definitely a memory leak but so is this entire thing so I should come back and think about that
+                created = false;
             }
         }
+    }
+    else{
+        Brick::mouse(pos);
     }
 }
 
 void Fold::released(glm::vec2 pos, int button){
-    drag = 0;
-    created = false;
+    if(drag){
+        drag = 0;
+        created = false;
+    }
+    else{
+        Brick::clicked(pos, button);
+    }
 }
 
 void Fold::update(){

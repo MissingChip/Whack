@@ -96,6 +96,9 @@ void Brick::insert(Brick* p, int index){
     }
 }
 void Brick::remove(Brick* p){
+    if(Group* g = dynamic_cast<Group*>(tile)){
+        g->remove(p->tile);
+    }
     for(int i=0;i<bricks.size();i++){
         if(bricks[i] == p){
             bricks.erase(bricks.begin()+i);
