@@ -38,12 +38,6 @@ void Fold::mouse(glm::vec2 pos){
                     created = true;
                 }
                 Brick* b = bricks[drag-1];
-                if(Group* g = dynamic_cast<Group*>(tile)){
-                    printf("%lu\n", g->in.size());
-                    Tile* t = g->in[0];
-                    printf("%f %f %f %f\n", t->pos.x, t->pos.y, t->size.x, t->size.y);
-                }
-                //printf("%d\n", bricks[drag-1]->tile->size.x );
                 
                 //printf("cccc\n");
                 bricks[drag-1]->tile->size.x = pos.x - bricks[drag-1]->tile->pos.x;
@@ -59,10 +53,32 @@ void Fold::released(glm::vec2 pos, int button){
     created = false;
 }
 
+void Fold::update(){
+    if(dir == -1){
+        Group* g = static_cast<Group*>(tile);
+        g->in[0]->size = g->size;
+        psize = tile->size;
+    }
+    else if(psize != tile->size){
+        double r = tile->size[dir]/psize[dir];
+        Group* g = static_cast<Group*>(tile);
+        for(int i = 0; i<g->in.size()-1;i++){
+            Tile* t = g->in[i];
+            t->size[dir] *= r;
+            t->size[!dir] = tile->size[!dir];
+            g->in[i+1]->pos[dir] = t->pos[dir] + t->size[dir];
+        }
+        g->in[g->in.size()-1]->size[dir] = g->size[dir] - g->in[g->in.size()-1]->pos[dir];
+        g->in[g->in.size()-1]->size[!dir] = tile->size[!dir];
+        psize = tile->size;
+    }
+    Brick::update();
+}
+
 Brick* Fold::new_empty(){
     Brick* b = new Brick();
     b->tile = new Tile();
-    b->tile->size.y = tile->size.y;
+    b->tile->size = tile->size;
     return b;
 }
 bool Fold::dir_unset(){

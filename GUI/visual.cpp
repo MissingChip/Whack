@@ -95,12 +95,12 @@ int main(){
         state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
         if (state == GLFW_PRESS && pstate == GLFW_RELEASE)
         {
-            printf("clicked %f %f\n", xpos, ypos);
+            //printf("clicked %f %f\n", xpos, ypos);
             b.clicked(glm::vec2(xpos, ypos), GLFW_MOUSE_BUTTON_LEFT);
         }
         else if (state == GLFW_RELEASE && pstate == GLFW_PRESS)
         {
-            printf("released %f %f\n", xpos, ypos);
+            //printf("released %f %f\n", xpos, ypos);
             b.released(glm::vec2(xpos, ypos), GLFW_MOUSE_BUTTON_LEFT);
         }
         pstate = state;

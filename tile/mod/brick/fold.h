@@ -12,6 +12,8 @@ public:
     bool created;
     glm::vec2 trigger = glm::vec2(24, 24);
     glm::vec2 trigger_pos;
+    glm::vec2 psize;
+    virtual void update();
     virtual void clicked(glm::vec2 pos, int button);
     virtual void mouse(glm::vec2 pos);
     virtual void released(glm::vec2 pos, int button);
