@@ -39,10 +39,16 @@ void Fold::mouse(glm::vec2 pos){
                 }
                 Brick* b = bricks[drag-1];
                 
-                //printf("cccc\n");
-                bricks[drag-1]->tile->size.x = pos.x - bricks[drag-1]->tile->pos.x;
-                bricks[drag]->tile->size.x = trigger_pos.x - pos.x;
-                bricks[drag]->tile->pos.x = pos.x;
+                if(pos.x > bricks[drag-1]->tile->pos.x + trigger.x){
+                    bricks[drag-1]->tile->size.x = pos.x - bricks[drag-1]->tile->pos.x;
+                    bricks[drag]->tile->size.x = trigger_pos.x - pos.x;
+                    bricks[drag]->tile->pos.x = pos.x;
+                }
+                else{
+                    bricks[drag-1]->tile->size.x = trigger.x;
+                    bricks[drag]->tile->size.x = trigger_pos.x - bricks[drag-1]->tile->size.x - bricks[drag-1]->tile->pos.x;
+                    bricks[drag]->tile->pos.x = bricks[drag-1]->tile->pos.x + trigger.x;
+                }
             }
         }
     }
