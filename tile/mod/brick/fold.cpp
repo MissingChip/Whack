@@ -34,7 +34,6 @@ void Fold::mouse(glm::vec2 pos){
                 if(!created){
                     Brick* b = new_empty();
                     b->tile->pos = glm::vec2(trigger_pos.x, 0);
-                    b->tile->size.y = tile->size.y;
                     insert(b, drag);
                     created = true;
                 }
@@ -63,6 +62,7 @@ void Fold::released(glm::vec2 pos, int button){
 Brick* Fold::new_empty(){
     Brick* b = new Brick();
     b->tile = new Tile();
+    b->tile->size.y = tile->size.y;
     return b;
 }
 bool Fold::dir_unset(){
