@@ -25,6 +25,7 @@ public:
     virtual void remove(Modifier* m);
     virtual int idx_of(Tile* t);
     virtual int idx_of(Modifier* t);
+    virtual void replace(Tile* t1, Tile* t2);
 };
 
 inline Group::Group(Tile* t){

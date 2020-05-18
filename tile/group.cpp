@@ -45,6 +45,7 @@ void Group::insert(Modifier* m, int index){
 void Group::remove(Tile* t){
     for(int i=0;i<in.size();i++){
         if(in[i] == t){
+            in[i]->parent = nullptr;
             in.erase(in.begin()+i);
             return;
         }
@@ -74,6 +75,12 @@ int Group::idx_of(Modifier* m){
         }
     }
     return -1;
+}
+
+void Group::replace(Tile* t1, Tile* t2){
+    int i = idx_of(t1);
+    in[i]->parent = nullptr;
+    in[i] = t2;
 }
 
 Group::~Group(){

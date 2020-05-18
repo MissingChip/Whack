@@ -4,6 +4,7 @@
 #include "../tile/mod/brick/brick.h"
 #include "../tile/mod/brick/menubar.h"
 #include "../tile/mod/brick/row.h"
+#include "../tile/mod/brick/fold.h"
 
 #include <vector>
 
@@ -22,6 +23,7 @@ public:
 
     MenuBar menu;
     Row inner;
+    Fold fold;
     StretchMod stretchmod = StretchMod(anchors::horizontal);
     FillMod fillmod;
 
@@ -30,7 +32,7 @@ public:
 
 inline BrickDemo::BrickDemo() : Row() {
     add(&menu);
-    add(&inner);
+    add(&fold);
     group.add(&fillmod); 
     group.add(&stretchmod);
     menu.bricks[1]->on_click = menu1click;

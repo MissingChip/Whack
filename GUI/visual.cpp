@@ -88,6 +88,7 @@ int main(){
     while( !glfwWindowShouldClose( window ) )
     {
         glfwGetCursorPos(window, &xpos, &ypos);
+        glfwGetWindowSize(window, &width, &height);
         
         //printf("mouse %f %f\n", xpos, ypos);
         std::this_thread::sleep_for (std::chrono::milliseconds(20));
@@ -103,8 +104,8 @@ int main(){
             b.released(glm::vec2(xpos, ypos), GLFW_MOUSE_BUTTON_LEFT);
         }
         pstate = state;
+        b.mouse(glm::vec2(xpos, ypos));
 
-        glfwGetWindowSize(window, &width, &height);
         if(pwidth != width || pheight != height){
             glViewport(0, 0, width, height);
             v.size.x = width;

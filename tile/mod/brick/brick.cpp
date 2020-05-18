@@ -91,6 +91,9 @@ void Brick::add(Brick* p){
 void Brick::insert(Brick* p, int index){
     if(index<0) index=bricks.size()+index;
     bricks.insert(bricks.begin()+index,p);
+    if(Group* g = dynamic_cast<Group*>(tile)){
+        g->insert(p->tile, index);
+    }
 }
 void Brick::remove(Brick* p){
     for(int i=0;i<bricks.size();i++){
