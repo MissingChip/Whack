@@ -4,16 +4,22 @@
 #include "fold.h"
 #include "group.h"
 
+glm::vec2 Fold::trigger = glm::vec2(24, 24);
+
 Fold::Fold(){
     tile = new Group;
-    Brick* b = new_empty();
+    Brick* b = current_empty();
     add(b);
+}
+Fold::Fold(int opt){
+    tile = new Group;
 }
 Fold::~Fold(){
     delete tile;
 }
 
 void Fold::clicked(glm::vec2 pos, int button){
+    bool interacted = false;
     if(!drag){
         if(bricks.size() == 1){
             dir = -1;
@@ -24,10 +30,10 @@ void Fold::clicked(glm::vec2 pos, int button){
             int a[2] {0,0};
             int dout = -2;
             for(int d=0;d<2;d++){
-                if(pos[d] - trigger[d] < t->pos[d] && pos[d] > t->pos[d]){
+                if(pos[d] - trigger[d] < t->pos[d] && pos[d] >= t->pos[d] - 0.05){
                     a[d] = 1;
                 }
-                else if(pos[d] + trigger[d] > t->pos[d] + t->size[d] && pos[d] < t->pos[d] + t->size[d]){
+                else if(pos[d] + trigger[d] > t->pos[d] + t->size[d] && pos[d] <= t->pos[d] + t->size[d]){
                     a[d] = 2;
                 }
                 if(a[d]){
@@ -36,33 +42,38 @@ void Fold::clicked(glm::vec2 pos, int button){
                     dout = d;
                 }
             }
-            //corner
-            if(a[0] && a[1]){
-                created = false;
-                drag = i+1;
-                break;
-            }
-            //edge
-            else if (dout == dir){
-                if( int b = a[0] | a[1] ){
-                    created = true;
-                    drag = 0;
-                    if(i < g->in.size()-1 && b == 2){
-                        trigger_pos = t->pos;
-                        anchor_pos = g->in[i+1]->pos + g->in[i+1]->size;
-                        drag = i+1;
-                    }
-                    if(i > 0 && b == 1){
-                        trigger_pos = g->in[i-1]->pos;
-                        anchor_pos = t->pos + t->size;
-                        drag = i;
-                    }
+            if(!(typeid(bricks[i]) == typeid(Fold*))){
+                //corner
+                if(a[0] && a[1]){
+                    created = false;
+                    drag = i+1;
+                    interacted = true;
                     break;
+                }
+                //edge
+                else if (dout == dir){
+                    if( int b = a[0] | a[1] ){
+                        created = true;
+                        drag = 0;
+                        if(i < g->in.size()-1 && b == 2){
+                            trigger_pos = t->pos;
+                            anchor_pos = g->in[i+1]->pos + g->in[i+1]->size;
+                            drag = i+1;
+                            interacted = true;
+                        }
+                        if(i > 0 && b == 1){
+                            trigger_pos = g->in[i-1]->pos;
+                            anchor_pos = t->pos + t->size;
+                            drag = i;
+                            interacted = true;
+                        }
+                        break;
+                    }
                 }
             }
         }
     }
-    else{
+    if(!interacted){
         Brick::clicked(pos, button);
     }
 }
@@ -72,24 +83,26 @@ void Fold::mouse(glm::vec2 pos){
     if(drag){
         Brick* br = bricks[drag-1];
         for(int d=0;d<2;d++){
-            if(!dir_unset() && dir != d){
-                continue;
-            }
             if(!created && pos[d] - trigger[d]*2 > br->tile->pos[d] && pos[d] + trigger[d]*2 < br->tile->pos[d] + br->tile->size[d]){
                 if(dir_unset()){
                     dir = d;
                 }
                 if(dir == d){
-                    Brick* b = new_empty();
+                    Brick* b = current_empty();
                     //b->tile->pos[d] = anchor_pos[d];
                     insert(b, drag);
                     created = true;
+                }
+                else if(!temp_brick){
+                    swap_live_fold(drag-1);
                 }
             }
             if(created && dir == d){
                 bricks[drag-1]->tile->size[d] = pos[d] - bricks[drag-1]->tile->pos[d];
                 bricks[drag]->tile->size[d] = anchor_pos[d] - pos[d];
                 bricks[drag]->tile->pos[d] = pos[d];
+                bricks[drag-1]->update();
+                bricks[drag]->update();
 
                 if(pos[d] < trigger_pos[d] + trigger[d]){
                     bricks[drag]->tile->pos = bricks[drag-1]->tile->pos;
@@ -105,19 +118,16 @@ void Fold::mouse(glm::vec2 pos){
             }
         }
     }
-    else{
-        Brick::mouse(pos);
-    }
+    Brick::mouse(pos);
 }
 
 void Fold::released(glm::vec2 pos, int button){
     if(drag){
         drag = 0;
         created = false;
+        trash_empty(nullptr);
     }
-    else{
-        Brick::clicked(pos, button);
-    }
+    Brick::released(pos, button);
 }
 
 void Fold::update(){
@@ -142,11 +152,57 @@ void Fold::update(){
     Brick::update();
 }
 
+void Fold::remove(Brick* b){
+    trash_empty(b);
+    Brick::remove(b);
+}
+void Fold::remove(uint b){
+    trash_empty(bricks[b]);
+    Brick::remove(b);
+}
+
+Brick* Fold::current_empty(){
+    if(temp_brick){
+        Brick * t = temp_brick;
+        temp_brick = nullptr;
+        return t;
+    }
+    return new_empty();
+}
 Brick* Fold::new_empty(){
     Brick* b = new Brick();
     b->tile = new Tile();
     b->tile->size = tile->size;
     return b;
+}
+void Fold::trash_empty(Brick* b){
+    if(temp_brick) {
+        delete_empty(temp_brick);
+        temp_brick = b;
+        return;
+    }
+    temp_brick = b;
+}
+void Fold::delete_empty(Brick* b){
+    if(b){
+        delete b;
+    }
+}
+void Fold::swap_live_fold(uint i){
+    Brick* b = bricks[i];
+    Fold* f = new Fold(0);
+    f->tile->pos = b->tile->pos;
+    f->tile->size = b->tile->size;
+    f->psize = f->tile->size;
+    b->tile->pos = glm::vec2(0,0);
+    replace(i, f);
+    f->add(b);
+    f->trigger_pos = trigger_pos-f->tile->pos;
+    f->anchor_pos = anchor_pos-f->tile->pos;
+    f->drag = 1;
+    f->created = false;
+    f->dir = !dir;
+    drag = 0;
 }
 bool Fold::dir_unset(){
     return dir == -1;

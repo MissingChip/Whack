@@ -1,6 +1,7 @@
 
 #include "brick.h"
 #include "group.h"
+#include <cstdio>
 
 void Brick::attach(Tile* t){
     tile = t;
@@ -119,4 +120,13 @@ int Brick::idx_of(Brick* p){
         }
     }
     return -1;
+}
+void Brick::replace(Brick* b1, Brick* b2){
+    replace(idx_of(b1), b2);
+}
+void Brick::replace(uint i, Brick* b2){
+    if(Group* g = dynamic_cast<Group*>(tile)){
+        g->replace(bricks[i]->tile, b2->tile);
+    }
+    bricks[i] = b2;
 }

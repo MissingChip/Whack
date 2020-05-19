@@ -79,7 +79,11 @@ int Group::idx_of(Modifier* m){
 
 void Group::replace(Tile* t1, Tile* t2){
     int i = idx_of(t1);
+    replace(i, t2);
+}
+void Group::replace(uint i, Tile* t2){
     in[i]->parent = nullptr;
+    t2->parent = this;
     in[i] = t2;
 }
 
