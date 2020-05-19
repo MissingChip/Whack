@@ -15,80 +15,45 @@ Fold::~Fold(){
 
 void Fold::clicked(glm::vec2 pos, int button){
     if(!drag){
+        if(bricks.size() == 1){
+            dir = -1;
+        }
         Group* g = static_cast<Group*>(tile);
         for(int i=0;i<g->in.size();i++){
             Tile* t = g->in[i];
-            //right edge (max x)
-            if(pos.x + trigger.x > t->pos.x + t->size.x && pos.x < t->pos.x + t->size.x){
-                //top
-                if( pos.y < trigger.y){
-                    drag = i+1;
-                    trigger_pos = glm::vec2(t->pos.x+t->size.x, 0);
-                    anchor_pos = trigger_pos;
-                    break;
+            int a[2] {0,0};
+            for(int d=0;d<2;d++){
+                if(pos[d] - trigger[d] < t->pos[d] && pos[d] > t->pos[d]){
+                    a[d] = 1;
                 }
-                //bottom
-                if( pos.y + trigger.y > t->pos.y + t->size.y ){
-                    drag = i+1;
-                    trigger_pos = glm::vec2(t->pos.x+t->size.x, t->pos.y + t->size.y);
-                    anchor_pos = trigger_pos;
-                    break;
+                else if(pos[d] + trigger[d] > t->pos[d] + t->size[d] && pos[d] < t->pos[d] + t->size[d]){
+                    a[d] = 2;
                 }
-                //handle right edge
-                if(dir == 0 && i < g->in.size()-1){
-                    printf("right grab\n");
-                    drag = i+1;
-                    trigger_pos = glm::vec2(g->in[i+1]->pos.x+g->in[i+1]->size.x, 0);
-                    anchor_pos = trigger_pos;
-                    created = true;
-                    break;
+                if(a[d]){
+                    trigger_pos[d] = t->pos[d];
+                    anchor_pos[d] = t->pos[d] + t->size[d];
                 }
             }
-            //left edge (min x)
-            else if(pos.x - trigger.x < t->pos.x && pos.x > t->pos.x){
-                //top
-                if( pos.y < trigger.y ){
-                    drag = i+1;
-                    trigger_pos = glm::vec2(t->pos.x, 0);
-                    anchor_pos = glm::vec2(t->pos.x+t->size.x, 0);
-                    break;
-                }
-                //bottom
-                if(pos.y + trigger.y > t->pos.y + t->size.y){
-                    drag = i+1;
-                    trigger_pos = glm::vec2(t->pos.x, t->pos.y + t->size.y);
-                    anchor_pos = glm::vec2(t->pos.x+t->size.x, t->pos.y + t->size.y);
-                    break;
-                }
-                //handle left edge
-                if(dir == 0 && i > 0){
-                    printf("left grab\n");
-                    drag = i;
-                    trigger_pos = glm::vec2(t->pos.x, 0);
-                    anchor_pos = glm::vec2(t->pos.x+t->size.x, 0);
-                    created = true;
-                    break;
-                }
+            if(a[0] && a[1]){
+                created = false;
+                drag = i+1;
+                break;
             }
-            else if(dir ==  1){
-                //top edge (min y)
-                if(pos.y - trigger.y < t->pos.y && pos.y < t->pos.y){
-                    printf("top grab\n");
-                    drag = i;
-                    trigger_pos = glm::vec2(0, t->pos.y);
-                    anchor_pos = glm::vec2(0, t->pos.y+t->size.y);
-                    created = true;
-                    break;
-                }
-                //bottom edge (max y)
-                else if(pos.y + trigger.y > t->pos.y + t->size.y && pos.y < t->pos.y + t->size.y){
-                    printf("bottom grab\n");
+            else if( int b = a[0] | a[1] ){
+                created = true;
+                drag = 0;
+                if(i < g->in.size()-1 && b == 2){
+                    trigger_pos = t->pos;
+                    anchor_pos = g->in[i+1]->pos + g->in[i+1]->size;
+                    printf("%f %f\n", trigger_pos.x, anchor_pos.x);
                     drag = i+1;
-                    trigger_pos = glm::vec2(g->in[i+1]->pos.x+g->in[i+1]->size.x, 0);
-                    anchor_pos = trigger_pos;
-                    created = true;
-                    break;
                 }
+                if(i > 0 && b == 1){
+                    trigger_pos = g->in[i-1]->pos;
+                    anchor_pos = t->pos + t->size;
+                    drag = i;
+                }
+                break;
             }
         }
     }
@@ -100,37 +65,37 @@ void Fold::clicked(glm::vec2 pos, int button){
 void Fold::mouse(glm::vec2 pos){
     //printf("moused fold %f %f\n", pos.x, pos.y);
     if(drag){
-        for(int i=0;i<2;i++){
-            if(!dir_unset() && dir != i){
+        Brick* br = bricks[drag-1];
+        for(int d=0;d<2;d++){
+            if(!dir_unset() && dir != d){
                 continue;
             }
-            Brick* br = bricks[drag-1];
-            if(!created && pos[i] > br->tile->pos[i] + trigger[i]*2 && pos[i] + trigger[i]*2 < br->tile->pos[i] + br->tile->size[i] ){
+            if(!created && pos[d] - trigger[d]*2 > br->tile->pos[d] && pos[d] + trigger[d]*2 < br->tile->pos[d] + br->tile->size[d]){
                 if(dir_unset()){
-                    dir = i;
+                    dir = d;
                 }
-                if(dir == i){
+                if(dir == d){
                     Brick* b = new_empty();
-                    b->tile->pos[i] = anchor_pos[i];
+                    //b->tile->pos[d] = anchor_pos[d];
                     insert(b, drag);
                     created = true;
                 }
             }
-            if(created && dir == i){
-                bricks[drag-1]->tile->size[i] = pos[i] - bricks[drag-1]->tile->pos[i];
-                bricks[drag]->tile->size[i] = anchor_pos[i] - pos[i];
-                bricks[drag]->tile->pos[i] = pos[i];
+            if(created && dir == d){
+                bricks[drag-1]->tile->size[d] = pos[d] - bricks[drag-1]->tile->pos[d];
+                bricks[drag]->tile->size[d] = anchor_pos[d] - pos[d];
+                bricks[drag]->tile->pos[d] = pos[d];
 
-                if(pos[i] > anchor_pos[i] - trigger[i] || pos[i] < bricks[drag-1]->tile->pos[i] + trigger[i] && bricks.size() > 1){
-                    bricks[drag-1]->tile->size[i] += bricks[drag]->tile->size[i];
-                    remove(drag);
-                    //TODO this is definitely a memory leak
-                    /*if(bricks.size() == 1){
-                        dir = -1;
-                        drag = 0;
-                    }*/
+                if(pos[d] < trigger_pos[d] + trigger[d]){
+                    bricks[drag]->tile->pos = bricks[drag-1]->tile->pos;
+                    bricks[drag]->tile->size[d] += bricks[drag-1]->tile->size[d];
+                    remove(drag-1);
                     created = false;
-                    break;
+                }
+                if(pos[d] > anchor_pos[d] - trigger[d]){
+                    bricks[drag-1]->tile->size[d] += bricks[drag]->tile->size[d];
+                    remove(drag);
+                    created = false;
                 }
             }
         }
