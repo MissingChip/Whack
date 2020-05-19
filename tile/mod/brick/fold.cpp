@@ -4,6 +4,12 @@
 #include "fold.h"
 #include "group.h"
 
+enum interact_opts{
+    none,
+    edge,
+    corner
+};
+
 glm::vec2 Fold::trigger = glm::vec2(24, 24);
 
 Fold::Fold(){
@@ -47,7 +53,8 @@ void Fold::clicked(glm::vec2 pos, int button){
                     dout = d;
                 }
             }
-            if(!(typeid(bricks[i]) == typeid(Fold*))){
+            Fold* f = dynamic_cast<Fold*>(bricks[i]);
+            if(!(f) || !(f->interact(pos-f->tile->pos))){
                 //corner
                 if(a[0] && a[1]){
                     created = false;
@@ -226,4 +233,48 @@ void Fold::defer_fold(Fold* f){
 }
 bool Fold::dir_unset(){
     return dir == -1;
+}
+int Fold::interact(glm::vec2 pos){
+    if(bricks.size() == 1){
+        dir = -1;
+    }
+    Group* g = static_cast<Group*>(tile);
+    for(int i=0;i<g->in.size();i++){
+        Tile* t = g->in[i];
+        int a[2] {0,0};
+        int dout = -2;
+        //check both directions
+        for(int d=0;d<2;d++){
+            //close edge
+            if(pos[d] - trigger[d] < t->pos[d] && pos[d] >= t->pos[d] - 0.05){
+                a[d] = 1;
+            }
+            //far edge
+            else if(pos[d] + trigger[d] > t->pos[d] + t->size[d] && pos[d] <= t->pos[d] + t->size[d]){
+                a[d] = 2;
+            }
+        }
+        if(!(typeid(bricks[i]) == typeid(Fold*))){
+            //corner
+            if(a[0] && a[1]){
+                return corner;
+                break;
+            }
+            //edge
+            else if (dout == dir){
+                if( int b = a[0] | a[1] ){
+                    created = true;
+                    drag = 0;
+                    if(i < g->in.size()-1 && b == 2){
+                        return edge;
+                    }
+                    if(i > 0 && b == 1){
+                        return edge;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    return none;
 }

@@ -31,5 +31,6 @@ public:
     void delete_empty(Brick*);
     void swap_live_fold(uint idx);
     void defer_fold(Fold* f);
+    int interact(glm::vec2 pos);
     bool dir_unset();
 };
