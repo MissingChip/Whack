@@ -44,6 +44,9 @@ void Brick::released(glm::vec2 pos, int button){
 void Brick::update(){
     Group* g = dynamic_cast<Group*>(tile);
     if(g){
+        /*if(bricks.size() != g->in.size()){
+            printf("Group size mismatch\n");
+        }*/
         glm::vec2 size = g->size;
         for(int i=0;i<update_threshold;i++){
             g->update();

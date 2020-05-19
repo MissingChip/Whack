@@ -15,6 +15,7 @@ public:
     glm::vec2 trigger_pos;
     glm::vec2 anchor_pos;
     glm::vec2 psize;
+    glm::vec2 pmouse_pos;
     Brick* temp_brick = nullptr;
     virtual void update();
     virtual void remove(Brick* b);
@@ -29,5 +30,6 @@ public:
     void trash_empty(Brick*);
     void delete_empty(Brick*);
     void swap_live_fold(uint idx);
+    void defer_fold(Fold* f);
     bool dir_unset();
 };

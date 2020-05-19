@@ -19,6 +19,7 @@ Fold::~Fold(){
 }
 
 void Fold::clicked(glm::vec2 pos, int button){
+    pmouse_pos = pos;
     bool interacted = false;
     if(!drag){
         if(bricks.size() == 1){
@@ -29,13 +30,17 @@ void Fold::clicked(glm::vec2 pos, int button){
             Tile* t = g->in[i];
             int a[2] {0,0};
             int dout = -2;
+            //check both directions
             for(int d=0;d<2;d++){
+                //close edge
                 if(pos[d] - trigger[d] < t->pos[d] && pos[d] >= t->pos[d] - 0.05){
                     a[d] = 1;
                 }
+                //far edge
                 else if(pos[d] + trigger[d] > t->pos[d] + t->size[d] && pos[d] <= t->pos[d] + t->size[d]){
                     a[d] = 2;
                 }
+                //set dragging info
                 if(a[d]){
                     trigger_pos[d] = t->pos[d];
                     anchor_pos[d] = t->pos[d] + t->size[d];
@@ -89,20 +94,29 @@ void Fold::mouse(glm::vec2 pos){
                 }
                 if(dir == d){
                     Brick* b = current_empty();
-                    //b->tile->pos[d] = anchor_pos[d];
-                    insert(b, drag);
+                    if(pos[d] > pmouse_pos[d]){
+                        b->tile->pos[d] = trigger_pos[d];
+                        insert(b, drag-1);
+                    }
+                    else{
+                        b->tile->pos[d] = anchor_pos[d];
+                        insert(b, drag);
+                    }
                     created = true;
                 }
                 else if(!temp_brick){
-                    swap_live_fold(drag-1);
+                    if(Fold* f = dynamic_cast<Fold*>(bricks[drag-1])){
+                        defer_fold(f);
+                    }
+                    else{
+                        swap_live_fold(drag-1);
+                    }
                 }
             }
-            if(created && dir == d){
+            if(created && dir == d && drag){
                 bricks[drag-1]->tile->size[d] = pos[d] - bricks[drag-1]->tile->pos[d];
                 bricks[drag]->tile->size[d] = anchor_pos[d] - pos[d];
                 bricks[drag]->tile->pos[d] = pos[d];
-                bricks[drag-1]->update();
-                bricks[drag]->update();
 
                 if(pos[d] < trigger_pos[d] + trigger[d]){
                     bricks[drag]->tile->pos = bricks[drag-1]->tile->pos;
@@ -115,10 +129,13 @@ void Fold::mouse(glm::vec2 pos){
                     remove(drag);
                     created = false;
                 }
+                bricks[drag-1]->update();
+                bricks[drag]->update();
             }
         }
     }
     Brick::mouse(pos);
+    pmouse_pos = pos;
 }
 
 void Fold::released(glm::vec2 pos, int button){
@@ -197,6 +214,9 @@ void Fold::swap_live_fold(uint i){
     b->tile->pos = glm::vec2(0,0);
     replace(i, f);
     f->add(b);
+    defer_fold(f);
+}
+void Fold::defer_fold(Fold* f){
     f->trigger_pos = trigger_pos-f->tile->pos;
     f->anchor_pos = anchor_pos-f->tile->pos;
     f->drag = 1;
