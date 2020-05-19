@@ -106,6 +106,12 @@ void Brick::remove(Brick* p){
         }
     }
 }
+void Brick::remove(uint index){
+    if(Group* g = dynamic_cast<Group*>(tile)){
+        g->remove(bricks[index]->tile);
+    }
+    bricks.erase(bricks.begin()+index);
+}
 int Brick::idx_of(Brick* p){
     for(int i=0;i<bricks.size();i++){
         if(bricks[i] == p){

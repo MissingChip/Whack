@@ -15,6 +15,7 @@ public:
     virtual void add(Brick* p);
     virtual void insert(Brick* p, int index);
     virtual void remove(Brick* p);
+    virtual void remove(uint index);
     virtual int idx_of(Brick* p);
 
     virtual void clicked(glm::vec2 pos, int button);
