@@ -22,6 +22,7 @@ void Fold::clicked(glm::vec2 pos, int button){
         for(int i=0;i<g->in.size();i++){
             Tile* t = g->in[i];
             int a[2] {0,0};
+            int dout = -2;
             for(int d=0;d<2;d++){
                 if(pos[d] - trigger[d] < t->pos[d] && pos[d] > t->pos[d]){
                     a[d] = 1;
@@ -32,28 +33,32 @@ void Fold::clicked(glm::vec2 pos, int button){
                 if(a[d]){
                     trigger_pos[d] = t->pos[d];
                     anchor_pos[d] = t->pos[d] + t->size[d];
+                    dout = d;
                 }
             }
+            //corner
             if(a[0] && a[1]){
                 created = false;
                 drag = i+1;
                 break;
             }
-            else if( int b = a[0] | a[1] ){
-                created = true;
-                drag = 0;
-                if(i < g->in.size()-1 && b == 2){
-                    trigger_pos = t->pos;
-                    anchor_pos = g->in[i+1]->pos + g->in[i+1]->size;
-                    printf("%f %f\n", trigger_pos.x, anchor_pos.x);
-                    drag = i+1;
+            //edge
+            else if (dout == dir){
+                if( int b = a[0] | a[1] ){
+                    created = true;
+                    drag = 0;
+                    if(i < g->in.size()-1 && b == 2){
+                        trigger_pos = t->pos;
+                        anchor_pos = g->in[i+1]->pos + g->in[i+1]->size;
+                        drag = i+1;
+                    }
+                    if(i > 0 && b == 1){
+                        trigger_pos = g->in[i-1]->pos;
+                        anchor_pos = t->pos + t->size;
+                        drag = i;
+                    }
+                    break;
                 }
-                if(i > 0 && b == 1){
-                    trigger_pos = g->in[i-1]->pos;
-                    anchor_pos = t->pos + t->size;
-                    drag = i;
-                }
-                break;
             }
         }
     }
