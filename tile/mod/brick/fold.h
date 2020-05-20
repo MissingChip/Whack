@@ -26,11 +26,11 @@ public:
     virtual void released(glm::vec2 pos, int button);
 
     Brick* current_empty();
-    Brick* new_empty();
+    virtual Brick* new_empty();
     void trash_empty(Brick*);
-    void delete_empty(Brick*);
+    virtual void delete_empty(Brick*);
     void swap_live_fold(uint idx);
     void defer_fold(Fold* f);
-    int interact(glm::vec2 pos);
+    int interact(const glm::vec2& pos);
     bool dir_unset();
 };

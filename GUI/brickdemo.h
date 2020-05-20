@@ -5,6 +5,8 @@
 #include "../tile/mod/brick/menubar.h"
 #include "../tile/mod/brick/row.h"
 #include "../tile/mod/brick/fold.h"
+#include "../tile/mod/brick/split.h"
+#include "../tile/mod/brick/label.h"
 
 #include <vector>
 
@@ -24,6 +26,7 @@ public:
     MenuBar menu;
     Row inner;
     Fold fold;
+    Split* split;
     StretchMod stretchmod = StretchMod(anchors::horizontal);
     FillMod fillmod;
 
@@ -31,8 +34,9 @@ public:
 };
 
 inline BrickDemo::BrickDemo() : Row() {
+    split = new Split(new Label(""), new Label(""));
     add(&menu);
-    add(&fold);
+    add(split);
     group.add(&fillmod); 
     group.add(&stretchmod);
     menu.bricks[1]->on_click = menu1click;

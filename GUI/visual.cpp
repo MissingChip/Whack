@@ -78,6 +78,7 @@ int main(){
     BrickDemo b;
     Visualizer v (b.tile);
     Tile& d = *b.tile;
+    b.forward_all();
 
     printf("%s\n", glfwGetVersionString());
     //printf("%p %p\n", &g2, &sidemenu);

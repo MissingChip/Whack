@@ -9,7 +9,13 @@ public:
     Tile* tile = nullptr;
     //Brick* parent = nullptr;
     std::vector<Brick*> bricks;
+    bool forward_outclick = false;
+    bool forward_outmouse = false;
+    bool forward_outrelease = false;
+
     void attach(Tile* t);
+    bool is_inside(glm::vec2 pos);
+    void forward_all(bool f = true);
     virtual void update();
     //virtual void shout();
     virtual void add(Brick* p);
@@ -19,6 +25,8 @@ public:
     virtual int idx_of(Brick* p);
     virtual void replace(Brick* b1, Brick* b2);
     virtual void replace(uint idx1, Brick* b2);
+    virtual int interact(const glm::vec2& pos);
+    virtual int check_interact(const glm::vec2& pos);
 
     virtual void clicked(glm::vec2 pos, int button);
     virtual void mouse(glm::vec2 pos);
