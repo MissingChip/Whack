@@ -11,6 +11,10 @@ void Brick::forward_all(bool f){
     forward_outmouse = f;
     forward_outrelease = f;
 }
+void Brick::forward_nonclick(bool f){
+    forward_outmouse = f;
+    forward_outrelease = f;
+}
 bool Brick::is_inside(glm::vec2 pos){
     return pos[0] > tile->pos[0] && pos[0] < tile->pos[0] + tile->size[0] && pos[1] > tile->pos[1] && pos[1] < tile->pos[1] + tile->size[1];
 }
@@ -32,9 +36,9 @@ void Brick::mouse(glm::vec2 pos){
     for(Brick* p : bricks){
         glm::vec2& pp = p->tile->pos; //page pos
         glm::vec2& ps = p->tile->size;//page size
-        if((pp.x < pos.x && pp.x + ps.x > pos.x && 
-                pp.y < pos.y && pp.y + ps.y > pos.y)
-                || forward_outmouse){
+        if(forward_outmouse ||
+                (pp.x < pos.x && pp.x + ps.x > pos.x && 
+                pp.y < pos.y && pp.y + ps.y > pos.y)){
             p->mouse(pos-pp);
         }
     }
@@ -44,9 +48,9 @@ void Brick::released(glm::vec2 pos, int button){
     for(Brick* p : bricks){
         glm::vec2& pp = p->tile->pos; //page pos
         glm::vec2& ps = p->tile->size;//page size
-        if((pp.x < pos.x && pp.x + ps.x > pos.x && 
-                pp.y < pos.y && pp.y + ps.y > pos.y)
-                || forward_outrelease){
+        if(forward_outrelease ||
+                (pp.x < pos.x && pp.x + ps.x > pos.x && 
+                pp.y < pos.y && pp.y + ps.y > pos.y)){
             p->released(pos-pp, button);
         }
     }

@@ -26,6 +26,7 @@ public:
     glm::vec2 global_pos();
     void ssize(glm::vec2& s);
     void spos(glm::vec2& s);
+    bool contains(const glm::vec2& pos);
 };
 
 inline Tile::Tile()
@@ -49,4 +50,7 @@ inline void Tile::ssize(glm::vec2& s){
 }
 inline void Tile::spos(glm::vec2& s){
     pos = s;
+}
+inline bool Tile::contains(const glm::vec2& s){
+    return s.x > pos.x && s.y > pos.y && s.x < pos.x + size.x && s.y < pos.y + size.y;
 }

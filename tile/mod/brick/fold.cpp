@@ -10,14 +10,13 @@ enum interact_opts{
     corner
 };
 
-glm::vec2 Fold::trigger = glm::vec2(24, 24);
+glm::vec2 Fold::trigger = glm::vec2(12, 10);
 
 Fold::Fold(){
     tile = new Group;
     Brick* b = current_empty();
     add(b);
-    forward_all();
-    forward_outclick = false;
+    forward_nonclick(true);
 }
 Fold::Fold(int opt){
     tile = new Group;
@@ -57,6 +56,7 @@ void Fold::clicked(glm::vec2 pos, int button){
                 }
             }
             Fold* f = dynamic_cast<Fold*>(bricks[i]);
+            //if f is not a fold, if f is a fold continue only if it is not to be interacted with
             if(!(f) || !(f->interact(pos-f->tile->pos))){
                 //corner
                 if(a[0] && a[1]){
@@ -299,6 +299,7 @@ int Fold::interact(const glm::vec2& pos){
                 }
                 break;
             }
+            //if(bricks[i]->tile->
         }
     }
     return none;

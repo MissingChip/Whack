@@ -7,16 +7,17 @@
 #include "../tile/mod/brick/fold.h"
 #include "../tile/mod/brick/split.h"
 #include "../tile/mod/brick/label.h"
+#include "../tile/mod/brick/drag.h"
 
 #include <vector>
 
 using namespace std;
 
 void menu1click(glm::vec2 pos, int b){
-    printf("aaa\n");
+    printf("menu1click\n");
 }
 void menu1release(glm::vec2 pos, int b){
-    printf("bbb\n");
+    printf("menu1release\n");
 }
 
 class BrickDemo : public Row {
@@ -26,6 +27,7 @@ public:
     MenuBar menu;
     Row inner;
     Fold fold;
+    Drag drag;
     Split* split;
     StretchMod stretchmod = StretchMod(anchors::horizontal);
     FillMod fillmod;
@@ -34,7 +36,9 @@ public:
 };
 
 inline BrickDemo::BrickDemo() : Row() {
-    split = new Split(new Label(""), new Label(""));
+    split = new Split(&drag, &fold);
+    drag.add(new Label());
+    split->forward_nonclick();
     add(&menu);
     add(split);
     group.add(&fillmod); 
